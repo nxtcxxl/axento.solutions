@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="js/footerForm.js" defer></script>  
   <style>
     :root{
       --bg:#0f0f10; --bg-2:#171717; --text:#f2f2f2; --muted:#a9a9a9; --accent:#e52222;
@@ -285,16 +286,26 @@
       </div>
       <div>
         <h4>Contact me</h4>
-        <form action="#" method="post" onsubmit="event.preventDefault(); alert('Thanks! We\'ll get back to you.');">
+        <form id="footerContact" action="https://api.web3forms.com/submit" method="POST">
+
+          <input type="hidden" name="access_key" value="fb91dccb-6437-4c3d-882e-af08b5b8d969" />
+          <input type="hidden" name="subject" value="New contact from axento.solutions (footer form)">
+          <input type="hidden" name="from_name" value="aXento.solutions Website">
+
           <label style="display:block;font-size:12px;color:#a9a9a9">Name
             <input class="field" type="text" name="name" placeholder="Name" required>
           </label>
+
           <label style="display:block;margin-top:8px;font-size:12px;color:#a9a9a9">Email
             <input class="field" type="email" name="email" placeholder="Email" required>
           </label>
+
+          <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" style="display:none">
+
           <div class="foot-cta" style="margin-top:10px">
             <button class="btn primary" type="submit">Submit</button>
           </div>
+          <p id="footerContactMsg" class="muted" style="margin-top:8px;min-height:18px"></p>
         </form>
       </div>
     </div>
