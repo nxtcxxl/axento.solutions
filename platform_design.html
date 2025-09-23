@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>aXento • Операційна платформа</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#0f0f10;--bg-2:#171717;--card:#121212;--card-2:#1a1a1b;--line:#262626;--text:#f2f2f2;--muted:#b7b7b7;--accent:#e52222;--radius:16px;--container:1280px}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+
+    /* LAYOUT */
+    .app{display:grid;grid-template-columns:260px 1fr;min-height:100vh}
+    aside{border-right:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.02),transparent 35%),var(--bg-2);position:sticky;top:0;height:100dvh}
+    .brand{display:flex;align-items:center;gap:10px;padding:16px 16px 8px}
+    .brand img{height:24px}
+    .side-scroll{height:calc(100dvh - 58px);overflow:auto;padding:8px 10px 18px}
+    .group-title{color:#cfcfcf;font-size:12px;letter-spacing:.08em;padding:14px 8px 6px}
+    .navlink{display:flex;gap:10px;align-items:center;padding:10px 10px;border-radius:12px;border:1px solid transparent;color:#dcdcdc}
+    .navlink .i{height:16px;width:16px;border:2px solid currentColor;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:11px}
+    .navlink:hover{background:#151515;border-color:var(--line)}
+    .navlink.active{background:#181818;border-color:var(--accent);color:#fff}
+
+    /* Sidebar collapse */
+    .collapse-btn{margin-left:auto;display:inline-flex;align-items:center;justify-content:center;height:30px;width:30px;border:1px solid var(--line);border-radius:8px;background:#151515;cursor:pointer}
+    .collapse-btn:hover{border-color:var(--accent)}
+    .collapse-btn svg{transition:transform .2s ease}
+    .app.collapsed{grid-template-columns:84px 1fr}
+    .app.collapsed aside .brand strong{display:none}
+    .app.collapsed aside .group-title{display:none}
+    .app.collapsed aside .collapse-btn svg{transform:rotate(180deg)}
+    .navlink .label{white-space:nowrap}
+    .app.collapsed aside .navlink{justify-content:center;gap:0}
+    .app.collapsed aside .navlink .label{display:none}
+    .app.collapsed aside .side-scroll{padding-left:6px;padding-right:6px}
+
+    main{padding:18px 26px}
+    header.top{display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--line);padding:14px 0 16px;margin-bottom:16px}
+    .top .spacer{flex:1}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:#151515;color:#fff;font-weight:700}
+    .btn.primary{background:var(--accent);border-color:transparent}
+
+    /* Language switch */
+    .lang-switch{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--line);border-radius:999px;padding:4px;background:#141414}
+    .lang-switch button{border:0;background:transparent;color:#dcdcdc;font-weight:700;padding:6px 10px;border-radius:999px;cursor:pointer}
+    .lang-switch button.active{background:var(--accent);color:#fff}
+    @media (max-width:520px){.lang-switch{display:none}}
+
+    .section{display:none}
+    .section.active{display:block}
+
+    .h-red{color:var(--accent);font-weight:800;margin:0 0 8px;font-size:28px}
+    .lead{color:#d7d7d7;max-width:900px}
+
+    .cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+    .card h3{margin:0 0 6px}
+    .card p{margin:0;color:#cfcfcf}
+    .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+    .kpi{background:var(--card-2);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}
+    .kpi .n{font-weight:800;font-size:20px}
+
+    .two{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;margin-top:16px}
+    .list{display:grid;gap:10px}
+    .li{display:flex;gap:10px;align-items:flex-start;padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--card-2)}
+    .badge{min-width:26px;height:26px;border:2px solid var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent)}
+
+    .chart{height:140px;border:1px dashed #2a2a2a;border-radius:12px;display:grid;place-items:center;color:#9e9e9e}
+
+    footer{margin-top:18px;border-top:1px solid var(--line);padding-top:14px;color:#bdbdbd;font-size:12px}
+
+    /* responsive */
+    @media (max-width: 1000px){
+      .cards{grid-template-columns:1fr}
+      .two{grid-template-columns:1fr}
+      .app{grid-template-columns:1fr}
+      aside{position:static;height:auto}
+      .side-scroll{height:auto}
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <!-- SIDEBAR -->
+  <aside>
+    <div class="brand">
+      <img src="assets/axento_white.svg" alt="aXento"/><strong data-i18n="brand">aXento Platform</strong>
+      <button class="collapse-btn" id="collapseBtn" aria-label="Згорнути/розгорнути сайдбар" title="Згорнути/розгорнути">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14 5l-7 7 7 7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="side-scroll">
+      <div class="group-title" data-i18n="groupTitle">Модулі</div>
+      <a class="navlink active" data-target="#s1"><span class="i">1</span><span class="label" data-i18n="nav.s1">Оргструктура та ролі</span></a>
+      <a class="navlink" data-target="#s2"><span class="i">2</span><span class="label" data-i18n="nav.s2">Стандартизація</span></a>
+      <a class="navlink" data-target="#s3"><span class="i">3</span><span class="label" data-i18n="nav.s3">Продуктивність команди</span></a>
+      <a class="navlink" data-target="#s4"><span class="i">4</span><span class="label" data-i18n="nav.s4">HR</span></a>
+      <a class="navlink" data-target="#s5"><span class="i">5</span><span class="label" data-i18n="nav.s5">Автоматизація та делівері</span></a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main>
+    <header class="top">
+      <h1 style="margin:0;font-size:22px" data-i18n="topTitle">Операційна платформа</h1>
+
+      <!-- Language -->
+      <div class="lang-switch" id="langSwitch" role="group" aria-label="Language">
+        <button type="button" data-lang="uk" class="active" aria-pressed="true">UA</button>
+        <button type="button" data-lang="en" aria-pressed="false">US</button>
+      </div>
+
+      <div class="spacer"></div>
+      <a class="btn" href="#" data-i18n="btn.export">Експорт PDF</a>
+      <a class="btn primary" href="#" data-i18n="btn.create">Створити проект</a>
+    </header>
+
+    <!-- S1 -->
+    <section class="section active" id="s1">
+      <h2 class="h-red" data-i18n="s1.title">Стратегія, оргструктура та ролі</h2>
+      <p class="lead" data-i18n="s1.lead">Топ-рівень управління компанією: аудит операційної моделі, візуальна оргструктура, карти ролей, KPI/OKR, матриці відповідальності та сценарії структурних змін.</p>
+      <div class="cards">
+        <div class="card">
+          <h3 data-i18n="s1.c1.h">Аудит операційної моделі</h3>
+          <p data-i18n="s1.c1.p">Інтерактивні питання по сферах (стратегія, процеси, HR, комунікації). Результат — теплокарта проблем і PDF-звіт.</p>
+          <div class="kpis">
+            <div class="kpi"><div class="n">1–5</div><div class="c" data-i18n="s1.c1.k1">шкала</div></div>
+            <div class="kpi"><div class="n">Heatmap</div><div class="c" data-i18n="s1.c1.k2">пріоритети</div></div>
+            <div class="kpi"><div class="n">Benchmark</div><div class="c" data-i18n="s1.c1.k3">ринок</div></div>
+          </div>
+        </div>
+        <div class="card">
+          <h3 data-i18n="s1.c2.h">Оргструктура (drag-and-drop)</h3>
+          <p data-i18n="s1.c2.p">Картки людей/ролей, підпорядкування, фільтри по відділах. Перевірки: double-work і «дірки» відповідальності.</p>
+          <div class="chart" data-i18n="s1.c2.chart">Org chart canvas</div>
+        </div>
+        <div class="card">
+          <h3 data-i18n="s1.c3.h">Карти ролей (R&amp;R Maps)</h3>
+          <p data-i18n="s1.c3.p">Зони відповідальності, ключові завдання, очікувані результати. Шаблони для стандартних відділів.</p>
+        </div>
+        <div class="card">
+          <h3 data-i18n="s1.c4.h">KPI/OKR дашборд</h3>
+          <p data-i18n="s1.c4.p">Прогрес-бари: компанія → команда → людина. Інтеграції (Jira/CRM) для авто-оновлення.</p>
+        </div>
+        <div class="card">
+          <h3 data-i18n="s1.c5.h">Матриці відповідальності (RACI/DRI)</h3>
+          <p data-i18n="s1.c5.p">Інтерактивна таблиця по проєкту/процесу + аналіз перевантаження.</p>
+        </div>
+        <div class="card">
+          <h3 data-i18n="s1.c6.h">План міграції структури</h3>
+          <p data-i18n="s1.c6.p">Gantt/Kanban етапів переходу: Підготовка → Комунікація → Впровадження → Закріплення.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- S2 -->
+    <section class="section" id="s2">
+      <h2 class="h-red" data-i18n="s2.title">Процеси, ефективність і стандартизація</h2>
+      <p class="lead" data-i18n="s2.lead">Опис, вимірювання та стандартизація процесів: SOP, чеклісти, дашборди процесів, автоматизації, внутрішня база знань, регламенти та KPI процесів.</p>
+      <div class="cards">
+        <div class="card"><h3 data-i18n="s2.c1.h">Builder для SOP</h3><p data-i18n="s2.c1.p">Редактор кроків, чеклісти, файли, версії документів. З SOP у 1 клік створюється чекліст виконання.</p></div>
+        <div class="card"><h3 data-i18n="s2.c2.h">Чеклісти та шаблони</h3><p data-i18n="s2.c2.p">Онбординг, маркетинг, фінансове закриття. Прогрес-бари та нагадування у Slack/Email.</p></div>
+        <div class="card"><h3 data-i18n="s2.c3.h">Процесні дашборди</h3><p data-i18n="s2.c3.p">WIP, середній час, вузькі місця, Kanban-статистика. Інтеграції з Jira/Trello/Asana.</p></div>
+        <div class="card"><h3 data-i18n="s2.c4.h">Рекомендації автоматизацій</h3><p data-i18n="s2.c4.p">Zapier/Make/скрипти + оцінка економії часу. Готові рецепти інтеграцій.</p></div>
+        <div class="card"><h3 data-i18n="s2.c5.h">Внутрішня база знань</h3><p data-i18n="s2.c5.p">Категорії, пошук, права доступу, версії, відео. Шаблони регламентів «як робити X».</p></div>
+        <div class="card"><h3 data-i18n="s2.c6.h">Стандартизація процесів</h3><p data-i18n="s2.c6.p">Мапа стандартизації і KPI: % описаних процесів, відповідальні, ревʼю.</p></div>
+      </div>
+    </section>
+
+    <!-- S3 -->
+    <section class="section" id="s3">
+      <h2 class="h-red" data-i18n="s3.title">Комунікації та продуктивність команди</h2>
+      <p class="lead" data-i18n="s3.lead">Взаємодія між людьми та керування завантаженням: аудит каналів, async-гайди, правила мітингів, фасилітація, time-tracking, performance-review та прогрес по KPI/OKR.</p>
+      <div class="two">
+        <div class="card">
+          <h3 data-i18n="s3.c1.h">Комунікації</h3>
+          <p data-i18n="s3.c1.p">Аудит Slack/Teams/Email, перевантажені канали, рекомендації обʼєднання. Шаблони мітингів + інтеграція з Calendar. Async-апдейти замість зустрічей.</p>
+          <div class="chart" data-i18n="s3.c1.chart">Комунікаційний дашборд</div>
+        </div>
+        <div class="card">
+          <h3 data-i18n="s3.c2.h">Продуктивність команди</h3>
+          <p data-i18n="s3.c2.p">Time-tracking аудит (Toggl/Clockify), velocity & KPI дашборд, 360/self/manager review з радарними звітами, прогрес-бари OKR.</p>
+          <div class="kpis">
+            <div class="kpi"><div class="n">-X%</div><div class="c" data-i18n="s3.c2.k1">час на мітинги</div></div>
+            <div class="kpi"><div class="n">+Y%</div><div class="c" data-i18n="s3.c2.k2">velocity</div></div>
+            <div class="kpi"><div class="n">360°</div><div class="c" data-i18n="s3.c2.k3">оцінювання</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="cards" style="margin-top:16px">
+        <div class="card"><h3 data-i18n="s3.c3.h">Навчання фасилітації</h3><p data-i18n="s3.c3.p">Мікрокурси, симуляції, бейджі; шпаргалки у Slack/Teams.</p></div>
+        <div class="card"><h3 data-i18n="s3.c4.h">Правила мітингів</h3><p data-i18n="s3.c4.p">Agenda/ролі/таймінг, таймер у Meet/Zoom, авто-нотатки.</p></div>
+      </div>
+    </section>
+
+    <!-- S4 -->
+    <section class="section" id="s4">
+      <h2 class="h-red" data-i18n="s4.title">HR, розвиток та зміни</h2>
+      <p class="lead" data-i18n="s4.lead">Людський фактор: онбординг, фідбек, карʼєрні карти та керування змінами (план, лідерство, воркшопи).</p>
+      <div class="cards">
+        <div class="card"><h3 data-i18n="s4.c1.h">Онбординг-портал</h3><p data-i18n="s4.c1.p">Особистий workspace з чеклістами, відео та таймлайном Day1 → Month1; buddy-система.</p></div>
+        <div class="card"><h3 data-i18n="s4.c2.h">1-on-1 та фідбек</h3><p data-i18n="s4.c2.p">Шаблони зустрічей, нагадування, історія домовленостей; анонімний фідбек.</p></div>
+        <div class="card"><h3 data-i18n="s4.c3.h">Карʼєрні дорожні карти</h3><p data-i18n="s4.c3.p">Рівні, компетенції, прогрес; рекомендовані ресурси.</p></div>
+        <div class="card"><h3 data-i18n="s4.c4.h">План змін</h3><p data-i18n="s4.c4.p">Kanban/Gantt етапів змін, RAG-статуси, ризики, відповідальні.</p></div>
+        <div class="card"><h3 data-i18n="s4.c5.h">Лідерство під час змін</h3><p data-i18n="s4.c5.p">Бібліотека гайдів і курсів для менеджерів.</p></div>
+        <div class="card"><h3 data-i18n="s4.c6.h">Воркшоп-генератор</h3><p data-i18n="s4.c6.p">Конструктор вправ з таймерами; експорт і інтеграція з Miro/FigJam.</p></div>
+      </div>
+    </section>
+
+    <!-- S5 -->
+    <section class="section" id="s5">
+      <h2 class="h-red" data-i18n="s5.title">Інструменти, автоматизація та делівері</h2>
+      <p class="lead" data-i18n="s5.lead">Технічна сторона операцій і клієнтський сервіс: аудит стеку, інтеграції та автоматизації, аналітика делівері, backlog-менеджмент, досвід клієнта.</p>
+      <div class="cards">
+        <div class="card"><h3 data-i18n="s5.c1.h">Аудит стеку інструментів</h3><p data-i18n="s5.c1.p">Каталог «Ціль/Використання/Вартість/Альтернативи», виявлення дублів, ROI.</p></div>
+        <div class="card"><h3 data-i18n="s5.c2.h">Рекомендований стек</h3><p data-i18n="s5.c2.p">Пакети мін/середній/макс + інструкції налаштування.</p></div>
+        <div class="card"><h3 data-i18n="s5.c3.h">Інтеграції та автоматизації</h3><p data-i18n="s5.c3.p">Конструктор «якщо X → тоді Y», рецепти Zapier/Make, оцінка економії часу.</p></div>
+        <div class="card"><h3 data-i18n="s5.c4.h">Документація правил</h3><p data-i18n="s5.c4.p">Гайди використання інструментів, версії, нагадування про оновлення.</p></div>
+        <div class="card"><h3 data-i18n="s5.c5.h">Аналітика делівері</h3><p data-i18n="s5.c5.p">Середній час, % прострочень, прогноз готовності; звʼязок із NPS.</p></div>
+        <div class="card"><h3 data-i18n="s5.c6.h">Backlog-менеджмент</h3><p data-i18n="s5.c6.p">Пріоритизація High/Medium/Low, авто-пріор на базі OKR, візуалізація станів.</p></div>
+        <div class="card"><h3 data-i18n="s5.c7.h">Баланс завантаження</h3><p data-i18n="s5.c7.p">Дашборд завантаження людей/команд і рекомендації перерозподілу.</p></div>
+        <div class="card"><h3 data-i18n="s5.c8.h">Замовлення → фідбек</h3><p data-i18n="s5.c8.p">Трекер від запиту до відгуку та % кейсів із фідбеком.</p></div>
+      </div>
+    </section>
+
+    <footer data-i18n="footer">© 2025 aXento.solutions · Платформа операційного менеджменту</footer>
+  </main>
+</div>
+<script>
+  // ---------- Router ----------
+  const links = document.querySelectorAll('.navlink');
+  const sections = document.querySelectorAll('.section');
+  function activate(target){
+    links.forEach(l=>l.classList.toggle('active', l.dataset.target===target));
+    sections.forEach(s=>s.classList.toggle('active', `#${s.id}`===target));
+  }
+  links.forEach(l=>l.addEventListener('click', e=>{ e.preventDefault(); activate(l.dataset.target); history.replaceState(null,'', l.dataset.target); }));
+  if(location.hash){ const t = location.hash; const el = document.querySelector(`.navlink[data-target="${t}"]`); if(el) activate(t); }
+
+  // ---------- Sidebar collapse ----------
+  const appEl = document.querySelector('.app');
+  const collapseBtn = document.getElementById('collapseBtn');
+  function setCollapseTitle(lang){
+    const ua = { aria: 'Згорнути/розгорнути сайдбар', title: 'Згорнути/розгорнути' };
+    const en = { aria: 'Collapse/expand sidebar', title: 'Collapse/expand' };
+    const t = (lang==='en')?en:ua;
+    collapseBtn.setAttribute('aria-label', t.aria);
+    collapseBtn.setAttribute('title', t.title);
+  }
+  try { if(localStorage.getItem('axento_sidebar_collapsed') === '1'){ appEl.classList.add('collapsed'); } } catch(e){}
+  collapseBtn && collapseBtn.addEventListener('click', () => {
+    appEl.classList.toggle('collapsed');
+    try { localStorage.setItem('axento_sidebar_collapsed', appEl.classList.contains('collapsed') ? '1' : '0'); } catch(e){}
+  });
+
+  // ---------- I18N ----------
+  const I18N = {
+    uk: {
+      title: 'aXento • Операційна платформа',
+      brand: 'aXento Platform',
+      groupTitle: 'Модулі',
+      'nav.s1': 'Оргструктура та ролі',
+      'nav.s2': 'Стандартизація',
+      'nav.s3': 'Продуктивність команди',
+      'nav.s4': 'HR',
+      'nav.s5': 'Автоматизація та делівері',
+      topTitle: 'Операційна платформа',
+      'btn.export': 'Експорт PDF',
+      'btn.create': 'Створити проект',
+      's1.title': 'Стратегія, оргструктура та ролі',
+      's1.lead': 'Топ-рівень управління компанією: аудит операційної моделі, візуальна оргструктура, карти ролей, KPI/OKR, матриці відповідальності та сценарії структурних змін.',
+      's1.c1.h':'Аудит операційної моделі','s1.c1.p':'Інтерактивні питання по сферах (стратегія, процеси, HR, комунікації). Результат — теплокарта проблем і PDF-звіт.','s1.c1.k1':'шкала','s1.c1.k2':'пріоритети','s1.c1.k3':'ринок',
+      's1.c2.h':'Оргструктура (drag-and-drop)','s1.c2.p':'Картки людей/ролей, підпорядкування, фільтри по відділах. Перевірки: double-work і «дірки» відповідальності.','s1.c2.chart':'Org chart canvas',
+      's1.c3.h':'Карти ролей (R&R Maps)','s1.c3.p':'Зони відповідальності, ключові завдання, очікувані результати. Шаблони для стандартних відділів.',
+      's1.c4.h':'KPI/OKR дашборд','s1.c4.p':'Прогрес-бари: компанія → команда → людина. Інтеграції (Jira/CRM) для авто-оновлення.',
+      's1.c5.h':'Матриці відповідальності (RACI/DRI)','s1.c5.p':'Інтерактивна таблиця по проєкту/процесу + аналіз перевантаження.',
+      's1.c6.h':'План міграції структури','s1.c6.p':'Gantt/Kanban етапів переходу: Підготовка → Комунікація → Впровадження → Закріплення.',
+      's2.title':'Процеси, ефективність і стандартизація','s2.lead':'Опис, вимірювання та стандартизація процесів: SOP, чеклісти, дашборди процесів, автоматизації, внутрішня база знань, регламенти та KPI процесів.',
+      's2.c1.h':'Builder для SOP','s2.c1.p':'Редактор кроків, чеклісти, файли, версії документів. З SOP у 1 клік створюється чекліст виконання.',
+      's2.c2.h':'Чеклісти та шаблони','s2.c2.p':'Онбординг, маркетинг, фінансове закриття. Прогрес-бари та нагадування у Slack/Email.',
+      's2.c3.h':'Процесні дашборди','s2.c3.p':'WIP, середній час, вузькі місця, Kanban-статистика. Інтеграції з Jira/Trello/Asana.',
+      's2.c4.h':'Рекомендації автоматизацій','s2.c4.p':'Zapier/Make/скрипти + оцінка економії часу. Готові рецепти інтеграцій.',
+      's2.c5.h':'Внутрішня база знань','s2.c5.p':'Категорії, пошук, права доступу, версії, відео. Шаблони регламентів «як робити X».',
+      's2.c6.h':'Стандартизація процесів','s2.c6.p':'Мапа стандартизації і KPI: % описаних процесів, відповідальні, ревʼю.',
+      's3.title':'Комунікації та продуктивність команди','s3.lead':'Взаємодія між людьми та керування завантаженням: аудит каналів, async-гайди, правила мітингів, фасилітація, time-tracking, performance-review та прогрес по KPI/OKR.',
+      's3.c1.h':'Комунікації','s3.c1.p':'Аудит Slack/Teams/Email, перевантажені канали, рекомендації обʼєднання. Шаблони мітингів + інтеграція з Calendar. Async-апдейти замість зустрічей.','s3.c1.chart':'Комунікаційний дашборд',
+      's3.c2.h':'Продуктивність команди','s3.c2.p':'Time-tracking аудит (Toggl/Clockify), velocity & KPI дашборд, 360/self/manager review з радарними звітами, прогрес-бари OKR.','s3.c2.k1':'час на мітинги','s3.c2.k2':'velocity','s3.c2.k3':'оцінювання',
+      's3.c3.h':'Навчання фасилітації','s3.c3.p':'Мікрокурси, симуляції, бейджі; шпаргалки у Slack/Teams.',
+      's3.c4.h':'Правила мітингів','s3.c4.p':'Agenda/ролі/таймінг, таймер у Meet/Zoom, авто-нотатки.',
+      's4.title':'HR, розвиток та зміни','s4.lead':'Людський фактор: онбординг, фідбек, карʼєрні карти та керування змінами (план, лідерство, воркшопи).',
+      's4.c1.h':'Онбординг-портал','s4.c1.p':'Особистий workspace з чеклістами, відео та таймлайном Day1 → Month1; buddy-система.',
+      's4.c2.h':'1-on-1 та фідбек','s4.c2.p':'Шаблони зустрічей, нагадування, історія домовленостей; анонімний фідбек.',
+      's4.c3.h':'Карʼєрні дорожні карти','s4.c3.p':'Рівні, компетенції, прогрес; рекомендовані ресурси.',
+      's4.c4.h':'План змін','s4.c4.p':'Kanban/Gantt етапів змін, RAG-статуси, ризики, відповідальні.',
+      's4.c5.h':'Лідерство під час змін','s4.c5.p':'Бібліотека гайдів і курсів для менеджерів.',
+      's4.c6.h':'Воркшоп-генератор','s4.c6.p':'Конструктор вправ з таймерами; експорт і інтеграція з Miro/FigJam.',
+      's5.title':'Інструменти, автоматизація та делівері','s5.lead':'Технічна сторона операцій і клієнтський сервіс: аудит стеку, інтеграції та автоматизації, аналітика делівері, backlog-менеджмент, досвід клієнта.',
+      's5.c1.h':'Аудит стеку інструментів','s5.c1.p':'Каталог «Ціль/Використання/Вартість/Альтернативи», виявлення дублів, ROI.',
+      's5.c2.h':'Рекомендований стек','s5.c2.p':'Пакети мін/середній/макс + інструкції налаштування.',
+      's5.c3.h':'Інтеграції та автоматизації','s5.c3.p':'Конструктор «якщо X → тоді Y», рецепти Zapier/Make, оцінка економії часу.',
+      's5.c4.h':'Документація правил','s5.c4.p':'Гайди використання інструментів, версії, нагадування про оновлення.',
+      's5.c5.h':'Аналітика делівері','s5.c5.p':'Середній час, % прострочень, прогноз готовності; звʼязок із NPS.',
+      's5.c6.h':'Backlog-менеджмент','s5.c6.p':'Пріоритизація High/Medium/Low, авто-пріор на базі OKR, візуалізація станів.',
+      's5.c7.h':'Баланс завантаження','s5.c7.p':'Дашборд завантаження людей/команд і рекомендації перерозподілу.',
+      's5.c8.h':'Замовлення → фідбек','s5.c8.p':'Трекер від запиту до відгуку та % кейсів із фідбеком.',
+      footer:'© 2025 aXento.solutions · Платформа операційного менеджменту'
+    },
+    en: {
+      title: 'aXento • Operations Platform',
+      brand: 'aXento Platform',
+      groupTitle: 'Modules',
+      'nav.s1': 'Structure & Roles',
+      'nav.s2': 'Standardization',
+      'nav.s3': 'Team Productivity',
+      'nav.s4': 'HR',
+      'nav.s5': 'Automation & Delivery',
+      topTitle: 'Operations Platform',
+      'btn.export': 'Export PDF',
+      'btn.create': 'Create project',
+      's1.title':'Strategy, Org Structure & Roles',
+      's1.lead':'Top-level company management: operating model audit, visual org structures, role maps, KPIs/OKRs, responsibility matrices, and structural change scenarios.',
+      's1.c1.h':'Operating model audit','s1.c1.p':'Interactive questions across strategy, processes, HR, and comms. Outputs a heatmap and a PDF report.','s1.c1.k1':'scale','s1.c1.k2':'priorities','s1.c1.k3':'benchmark',
+      's1.c2.h':'Org chart (drag-and-drop)','s1.c2.p':'People/role cards, reporting lines, department filters. Checks for double-work and responsibility gaps.','s1.c2.chart':'Org chart canvas',
+      's1.c3.h':'Role maps (R&R Maps)','s1.c3.p':'Responsibilities, key tasks, expected outcomes. Templates for common functions.',
+      's1.c4.h':'KPI/OKR dashboard','s1.c4.p':'Progress bars: company → team → person. Auto-updates via Jira/CRM integrations.',
+      's1.c5.h':'Responsibility matrices (RACI/DRI)','s1.c5.p':'Interactive table per project/process with overload analysis.',
+      's1.c6.h':'Structure migration plan','s1.c6.p':'Gantt/Kanban for the transition: Prepare → Communicate → Implement → Anchor.',
+      's2.title':'Processes, Efficiency & Standardization','s2.lead':'Describe, measure, and standardize processes: SOPs, checklists, process dashboards, automations, internal knowledge base, regulations, and process KPIs.',
+      's2.c1.h':'SOP builder','s2.c1.p':'Step editor, checklists, files, versioning. Create an execution checklist in one click.',
+      's2.c2.h':'Checklists & templates','s2.c2.p':'Onboarding, marketing, month-end close. Progress bars and reminders via Slack/Email.',
+      's2.c3.h':'Process dashboards','s2.c3.p':'WIP, average cycle time, bottlenecks, Kanban stats. Integrates with Jira/Trello/Asana.',
+      's2.c4.h':'Automation suggestions','s2.c4.p':'Zapier/Make/scripts with time-savings estimate. Ready-to-use recipes.',
+      's2.c5.h':'Internal knowledge base','s2.c5.p':'Categories, search, access control, versions, video. Ready-made “how to do X” policies.',
+      's2.c6.h':'Process standardization','s2.c6.p':'Standardization map & KPIs: % documented processes, owners, reviews.',
+      's3.title':'Communications & Team Productivity','s3.lead':'How people interact and manage load: channel audits, async comms, meeting rules, facilitation training, time-tracking, performance reviews, and OKR/KPI progress.',
+      's3.c1.h':'Communications','s3.c1.p':'Audit Slack/Teams/Email, detect overloaded channels, merge suggestions. Meeting templates + Calendar integration. Async updates instead of meetings.','s3.c1.chart':'Communications dashboard',
+      's3.c2.h':'Team productivity','s3.c2.p':'Time-tracking audit (Toggl/Clockify), velocity & KPI dashboard, 360/self/manager reviews with radar charts, OKR progress.','s3.c2.k1':'time in meetings','s3.c2.k2':'velocity','s3.c2.k3':'reviews',
+      's3.c3.h':'Facilitation training','s3.c3.p':'Micro-courses, simulations, badges; cheat-sheets in Slack/Teams.',
+      's3.c4.h':'Meeting rules','s3.c4.p':'Agenda/roles/timing, Meet/Zoom timer, auto notes.',
+      's4.title':'HR, Development & Change','s4.lead':'The human side: onboarding, feedback, career maps, and change management (plan, leadership, workshops).',
+      's4.c1.h':'Onboarding portal','s4.c1.p':'Personal workspace with checklists, videos, and a Day 1 → Month 1 timeline; buddy system.',
+      's4.c2.h':'1-on-1 & feedback','s4.c2.p':'Meeting templates, reminders, agreement history; anonymous feedback.',
+      's4.c3.h':'Career roadmaps','s4.c3.p':'Levels, competencies, progress; recommended resources.',
+      's4.c4.h':'Change plan','s4.c4.p':'Kanban/Gantt for change stages, RAG statuses, risks, owners.',
+      's4.c5.h':'Leading through change','s4.c5.p':'Guides and courses library for managers.',
+      's4.c6.h':'Workshop generator','s4.c6.p':'Exercise builder with timers; export and Miro/FigJam integration.',
+      's5.title':'Tools, Automation & Delivery','s5.lead':'Technical operations and customer experience: stack audit, integrations & automations, delivery analytics, backlog management, and CX.',
+      's5.c1.h':'Tooling stack audit','s5.c1.p':'Catalog of Purpose/Usage/Cost/Alternatives; duplicate detection and ROI.',
+      's5.c2.h':'Recommended stack','s5.c2.p':'Minimal/Standard/Max packages with setup guides.',
+      's5.c3.h':'Integrations & automations','s5.c3.p':'Visual “if X → then Y” builder, Zapier/Make recipes, time-savings estimates.',
+      's5.c4.h':'Usage policies','s5.c4.p':'Tool usage guides, versioning, update reminders.',
+      's5.c5.h':'Delivery analytics','s5.c5.p':'Average cycle time, % overdue, readiness forecast; linked to NPS.',
+      's5.c6.h':'Backlog management','s5.c6.p':'High/Medium/Low prioritization, OKR-based auto-prioritization, state visualization.',
+      's5.c7.h':'Load balancing','s5.c7.p':'Team/person load dashboard and redistribution suggestions.',
+      's5.c8.h':'Order → feedback','s5.c8.p':'Tracker from request to feedback and % with responses.',
+      footer:'© 2025 aXento.solutions · Operations Management Platform'
+    }
+  };
+
+  function applyLang(lang){
+    const dict = I18N[lang] || I18N.uk;
+    document.documentElement.lang = (lang === 'en') ? 'en' : 'uk';
+    document.title = dict.title || document.title;
+    // Text nodes
+    document.querySelectorAll('[data-i18n]').forEach(el=>{
+      const key = el.getAttribute('data-i18n');
+      if(dict[key] !== undefined){ el.textContent = dict[key]; }
+    });
+    // Update collapse button labels
+    setCollapseTitle(lang);
+    // Switcher active state
+    const btns = document.querySelectorAll('#langSwitch button');
+    btns.forEach(b=>{
+      const on = b.dataset.lang === lang;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  }
+
+  // Load saved language or default UA
+  let currentLang = 'uk';
+  try { currentLang = localStorage.getItem('axento_lang') || 'uk'; } catch(e){}
+  applyLang(currentLang);
+
+  // Bind switcher
+  document.getElementById('langSwitch')?.addEventListener('click', (e)=>{
+    const btn = e.target.closest('button[data-lang]');
+    if(!btn) return;
+    const lang = btn.dataset.lang;
+    currentLang = lang;
+    try { localStorage.setItem('axento_lang', lang); } catch(e){}
+    applyLang(lang);
+  });
+</script>
+</body>
+</html>

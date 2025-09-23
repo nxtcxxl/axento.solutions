@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About — aXento.solutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0f0f10; --bg-2:#171717; --text:#f2f2f2; --muted:#a9a9a9; --accent:#e52222;
+      --card:#121212; --card-2:#1c1c1c; --line:#262626; --radius:18px; --shadow:0 10px 30px rgba(0,0,0,.35); --container:1180px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+    a{color:inherit;text-decoration:none}
+    .container{max-width:var(--container);margin:0 auto;padding:0 24px}
+    img{max-width:100%;display:block}
+    /* NAV */
+    header{position:sticky;top:0;z-index:40;background:rgba(15,15,16,.75);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid var(--line)}
+    .nav{display:flex;align-items:center;gap:28px;padding:14px 0}
+    .logo{display:flex;align-items:center;margin-right:32px}
+    .logo-img{height:24px}
+    .nav ul{list-style:none;margin:0;padding:0;display:flex;gap:28px}
+    .nav a.link{color:#d8d8d8;font-weight:600}
+    .nav a.link:hover{color:#fff}
+    .nav a.active{color:#fff;position:relative}
+    .nav a.active:after{content:"";position:absolute;left:0;right:0;bottom:-12px;height:2px;background:var(--accent);border-radius:2px}
+    .nav .spacer{flex:1}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 16px;border-radius:999px;font-weight:700;border:1px solid transparent;transition:all .18s ease;line-height:1}
+    .btn.primary{background:var(--accent);color:#fff;box-shadow:0 6px 16px rgba(229,34,34,.35)}
+    .btn.primary:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(229,34,34,.45)}
+    .btn.ghost{border:1px solid var(--line);color:#fff;background:transparent}
+
+    /* HERO */
+    .hero{padding:64px 0;background:linear-gradient(180deg,rgba(255,255,255,.02),transparent 40%)}
+    .eyebrow{font-size:14px;color:var(--muted);letter-spacing:.28px;margin-bottom:8px}
+    h1{font-size:52px;line-height:1.05;margin:8px 0 12px;font-weight:800}
+    .lead{max-width:800px;color:#d5d5d5;font-size:18px}
+    .breadcrumbs{margin:6px 0 10px;color:#b9b9b9;font-size:14px}
+    .breadcrumbs a{color:#cfcfcf}
+
+    /* SECTIONS */
+    section{padding:64px 0}
+    h2{font-size:34px;margin:0 0 18px}
+
+    /* ABOUT / STORY */
+    .split{display:grid;grid-template-columns:1.1fr .9fr;gap:28px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .card.pad{padding:22px 20px}
+    .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .kpi{border:1px solid var(--line);border-radius:14px;padding:18px 16px;background:var(--card-2)}
+    .kpi .num{font-size:28px;font-weight:800}
+    .kpi .cap{color:#c7c7c7;font-size:13px}
+
+    /* VALUES */
+    .values-header{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center}
+    .values-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:8px}
+    .value-item{display:flex;gap:14px;padding:16px 14px;border:1px solid var(--line);border-radius:14px;background:var(--card-2)}
+    .value-badge{min-width:36px;height:36px;border:2px solid var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent);}
+    .value-title{font-weight:800;margin-bottom:6px}
+    .value-desc{color:#cfcfcf}
+
+    /* TEAM */
+    .team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+    .member{border:1px solid var(--line);background:var(--card-2);border-radius:16px;padding:18px}
+    .avatar{height:84px;width:84px;border-radius:50%;object-fit:cover;border:1px solid var(--line);margin-bottom:10px;background:#0e0e0e}
+    .member h4{margin:4px 0 4px}
+    .member p{margin:0;color:#c9c9c9;font-size:14px}
+
+    /* TIMELINE */
+    .timeline{position:relative;padding-left:24px}
+    .timeline:before{content:"";position:absolute;left:8px;top:0;bottom:0;width:2px;background:var(--line)}
+    .mile{position:relative;margin-bottom:20px}
+    .mile:before{content:"";position:absolute;left:-20px;top:6px;height:10px;width:10px;border-radius:50%;background:var(--accent)}
+    .mile .year{font-weight:800}
+    .mile .text{color:#cfcfcf}
+
+    /* CTA + FOOTER (same look as landing) */
+    .cta{padding:56px 0;border-top:1px solid var(--line)}
+    .cta .inner{max-width:860px;margin:0 auto;text-align:center}
+    .cta h2{margin:0 0 10px}
+    .cta .lead{max-width:740px;margin:0 auto 18px;color:#d0d0d0;font-size:16px}
+    .center{text-align:center}
+
+    footer{border-top:1px solid var(--line);padding:28px 0 34px}
+    .footer-grid{display:grid;grid-template-columns:1.2fr .9fr 1fr;gap:28px}
+    .muted{color:var(--muted)}
+    .socials{display:flex;gap:12px;margin-top:8px}
+    .socials a{display:flex;align-items:center;justify-content:center;height:36px;width:36px;border-radius:10px;border:1px solid var(--line)}
+    .field{width:100%;padding:10px 12px;border-radius:10px;background:#151515;border:1px solid var(--line);color:#fff}
+    .foot-cta{display:flex;gap:8px;align-items:end}
+    .subfooter{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:14px;margin-top:18px;color:#bdbdbd;font-size:12px}
+
+    /* RESPONSIVE */
+    @media (max-width: 980px){
+      .split{grid-template-columns:1fr}
+      .values-header{grid-template-columns:1fr}
+      .values-grid{grid-template-columns:1fr}
+      .team-grid{grid-template-columns:1fr 1fr}
+      .footer-grid{grid-template-columns:1fr}
+      .nav{flex-wrap:wrap;row-gap:10px}
+      .nav ul{order:3;width:100%;justify-content:space-between}
+      .nav .logo{margin-right:0}
+    }
+    @media (max-width: 560px){
+      h1{font-size:40px}
+      .kpis{grid-template-columns:1fr 1fr}
+      .team-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header>
+    <div class="container nav">
+      <a class="logo" href="axento_solutions_landing_page_html_css.html"><img src="assets/axento_white.svg" alt="aXento.solutions" class="logo-img"></a>
+      <div class="spacer"></div>
+      <ul>
+        <li><a class="link" href="index.html">Home</a></li>
+        <li><a class="link" href="services.html">Services</a></li>
+        <!-- <li><a class="link" href="case_studies.html">Case Studies</a></li> -->
+        <li><a class="link" href="contact.html">Contact</a></li>
+        <li><a class="link active" href="#">About</a></li>
+      </ul>
+      <div class="spacer"></div>
+      <!-- <a class="link" href="platform_design.html">Login</a> -->
+      <a class="btn primary" href="https://calendly.com/max-axento/30min">Request demo</a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="breadcrumbs"><a href="home.html">Home</a> • About</div>
+      <h2>About aXento.solutions</h2>
+      <p class="lead">We help small tech companies structure operations, optimize processes, and build data‑driven workflows that scale. Our team combines consulting discipline with product thinking to bring clarity and momentum to your business.</p>
+    </div>
+  </section>
+
+  <!-- STORY + KPIs -->
+  <section>
+    <div class="container split">
+      <div class="card pad">
+        <h2>Our Story</h2>
+        <p>Founded in Lviv, Ukraine, aXento.solutions started with a simple goal: make operations simple and measurable. We partner with startups and SMBs to build lean processes, automate repetitive work, and set up the right analytics from day one.</p>
+        <p>We work as a compact unit of specialists—operations, automation, and data—so you can move faster without growing overhead.</p>
+      </div>
+      <div class="card pad">
+        <h2>In numbers</h2>
+        <div class="kpis">
+          <div class="kpi"><div class="num">50+</div><div class="cap">processes mapped</div></div>
+          <div class="kpi"><div class="num">30%</div><div class="cap">avg. cycle‑time cut</div></div>
+          <div class="kpi"><div class="num"><span>99.9%</span></div><div class="cap">automation uptime</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUES -->
+  <section>
+    <div class="container">
+      <div class="values-header">
+        <div>
+          <h2>Our Values</h2>
+          <p class="lead" style="font-size:16px;max-width:720px">Our values guide how we work with each other and with clients. They anchor decisions, focus our craft, and keep us accountable to outcomes—not buzzwords.</p>
+        </div>
+        <div class="card" style="padding:28px;display:flex;justify-content:center;align-items:center">
+          <!-- decorative polygon using pure CSS borders -->
+          <svg width="160" height="140" viewBox="0 0 160 140" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <polygon points="80,6 147,50 122,126 38,126 13,50" fill="#1d1d1d" stroke="#2b2b2b"/>
+            <polygon points="80,6 147,50 122,126 80,100" fill="#ff2b2f" opacity=".7"/>
+            <polygon points="80,6 13,50 38,126 80,100" fill="#1ca9ff" opacity=".65"/>
+            <polygon points="147,50 80,6 80,100" fill="#2347ff" opacity=".65"/>
+            <polygon points="13,50 80,6 80,100" fill="#8a2be2" opacity=".45"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="values-grid">
+        <div class="value-item">
+          <div class="value-badge">1</div>
+          <div><div class="value-title">Customer focus</div><div class="value-desc">We listen to client needs and tailor solutions that create real impact.</div></div>
+        </div>
+        <div class="value-item">
+          <div class="value-badge">2</div>
+          <div><div class="value-title">Quality and innovation</div><div class="value-desc">We deliver reliable results while exploring new ways to improve.</div></div>
+        </div>
+        <div class="value-item">
+          <div class="value-badge">3</div>
+          <div><div class="value-title">Transparency and professionalism</div><div class="value-desc">We communicate openly and act with integrity in every interaction.</div></div>
+        </div>
+        <div class="value-item">
+          <div class="value-badge">4</div>
+          <div><div class="value-title">Results-oriented and efficient</div><div class="value-desc">We prioritize outcomes, streamline processes, and avoid wasted effort.</div></div>
+        </div>
+        <div class="value-item">
+          <div class="value-badge">5</div>
+          <div><div class="value-title">Ambition and enthusiasm</div><div class="value-desc">We approach challenges with energy, curiosity, and a drive to grow.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section>
+    <div class="container">
+      <h2>Leadership</h2>
+      <div class="team-grid">
+        <div class="member">
+          <img class="avatar" src="photos/sonia.jpg" alt="Sonia Papiryanska">
+          <h4>Sonia Papiryanska</h4>
+          <p>Chief Operational Officer</p>
+          <p>Builds efficient processes and ensures reliable automation.</p>
+        </div>
+        <div class="member">
+          <img class="avatar" src="photos/maksym.jpg" alt="Maksym Iovenko">
+          <h4>Maksym Iovenko</h4>
+          <p>Chief Technical Officer</p>
+          <p>Aligns technical strategy, workflows, and delivery metrics.</p>
+        </div>
+        <div class="member">
+          <img class="avatar" src="photos/marta.jpg" alt="Marta Kushta">
+          <h4>Marta Kushta</h4>
+          <p>Head of HR & Delivery</p>
+          <p>Optimizes people and delivery processes to boost productivity.</p>
+        </div>
+        <div class="member">
+          <img class="avatar" src="photos/alina.jpg" alt="Alina Zastela">
+          <h4>Alina Zastela</h4>
+          <p>Head of External Relations</p>
+          <p>Strengthens partnerships and drives external collaboration.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section>
+    <div class="container split">
+      <div class="card pad">
+        <h2>Milestones</h2>
+        <div class="timeline">
+          <div class="mile"><div class="year">2025</div><div class="text">Founded aXento.solutions in Lviv to bring clarity to operations.</div></div>
+          <div class="mile"><div class="year">2026</div><div class="text">...</div></div>
+          <div class="mile"><div class="year">2027</div><div class="text">To be continue...</div></div>
+        </div>
+      </div>
+      <div class="card pad">
+        <h2>What we believe in</h2>
+        <p>Great operations are invisible. People feel momentum, not bureaucracy. We measure success by shorter cycle times, fewer handoffs, and teams that spend time on what matters.</p>
+        <p>We document just enough, automate the routine, and keep data close to decision‑making.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="container">
+        <div class="inner">
+            <h2>Ready to make operations simple?</h2>
+            <p class="lead">Let’s map your core processes and find the first 2–3 high‑leverage improvements.</p>
+            <a class="btn primary" href="https://calendly.com/max-axento/30min">Book a call</a>
+        </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container footer-grid">
+      <div class="addr">
+        <a class="logo" href="index.html"><img src="assets/axento_white.svg" alt="aXento.solutions" class="logo-img"></a>
+        <h4>aXento.solutions</h4>
+        <p class="muted">41, Pid Holoskom 17B<br>79067 Lviv, Ukraine</p>
+        <a class="muted" href="mailto:contact@axento.solutions">contact@axento.solutions</a>
+      </div>
+      <div>
+        <h4>Follow us:</h4>
+        <p class="muted">We share operations tips and case studies.</p>
+        <div class="socials">
+          <a href="#" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4Z" stroke="#fff"/><circle cx="12" cy="12" r="3.5" stroke="#fff"/><circle cx="17.5" cy="6.5" r="1" fill="#fff"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 10h3l-1 4h-2v7h-4v-7H7v-4h2V8a4 4 0 0 1 4-4h3v4h-3a1 1 0 0 0-1 1v1Z" fill="#fff"/></svg></a>
+          <a href="https://www.linkedin.com/company/axento-solutions" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.94 8.5H3.75V20h3.19V8.5ZM5.34 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM20.25 20v-6.5c0-3.46-1.85-5.06-4.33-5.06-1.99 0-2.89 1.09-3.39 1.86V8.5H9.5V20h3.03v-6.25c0-1.65.94-2.7 2.38-2.7 1.39 0 2.34.98 2.34 2.9V20h2.99Z" fill="#fff"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <h4>Contact me</h4>
+        <form action="#" method="post" onsubmit="event.preventDefault(); alert('Thanks! We\'ll get back to you.');">
+          <label style="display:block;font-size:12px;color:#a9a9a9">Name
+            <input class="field" type="text" name="name" placeholder="Name" required>
+          </label>
+          <label style="display:block;margin-top:8px;font-size:12px;color:#a9a9a9">Email
+            <input class="field" type="email" name="email" placeholder="Email" required>
+          </label>
+          <div class="foot-cta" style="margin-top:10px">
+            <button class="btn primary" type="submit">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="container subfooter">
+      <div>© 2025 aXento.solutions. All rights reserved.</div>
+      <div><a href="#" style="margin-right:16px">Privacy Policies</a><a href="#">Terms of use</a></div>
+    </div>
+  </footer>
+</body>
+</html>
