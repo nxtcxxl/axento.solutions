@@ -76,10 +76,10 @@
   footer{border-top:1px solid var(--line);padding:28px 0 34px}
   .footer-grid{display:grid;grid-template-columns:1.2fr .9fr 1fr;gap:28px}
   .muted{color:var(--muted)}
-  .addr h4{margin:0 0 10px}
+
   .socials{display:flex;gap:12px;margin-top:8px}
   .socials a{display:flex;align-items:center;justify-content:center;height:36px;width:36px;border-radius:10px;border:1px solid var(--line)}
-  .foot-form label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px}
+
   .field{width:100%;padding:10px 12px;border-radius:10px;background:#151515;border:1px solid var(--line);color:#fff}
   .foot-cta{display:flex;gap:8px;align-items:end}
   footer .logo{margin-bottom:8px} footer .logo-img{height:26px;width:auto;display:block}
@@ -112,7 +112,6 @@
   @media (max-width:980px){
     .hero{grid-template-columns:1fr}
     .hero .right{display:none}
-    .testimonials-grid{grid-template-columns:1fr}
     .why-grid{grid-template-columns:1fr}
     .footer-grid{grid-template-columns:1fr}
   }
@@ -135,9 +134,6 @@
   .menu-toggle{margin-left:auto;display:none;border:0;background:transparent;padding:10px 12px}
   .menu-toggle .bar{display:block;width:24px;height:2px;background:#fff;margin:4px 0;border-radius:2px}
   @media (max-width:900px){
-    .menu-toggle{display:inline-block}
-    .nav ul{display:none}          /* hide desktop links */
-    .btn.primary{display:none}     /* hide header CTA; show it in drawer */
   }
 
   /* Overlay (darker, with blur) */
@@ -174,8 +170,6 @@
   .mobile-links a{display:flex;justify-content:space-between;align-items:center;padding:14px 10px;font-weight:600}
   .mobile-links a::after{content:"›";opacity:.6}
   .mobile-cta{margin-top:auto;padding:14px 12px}
-  .mobile-cta .btn.primary{width:100%}
-  body.menu-open{overflow:hidden;position:relative;}
 
   /* Subfooter on phones (smaller text + more breathing room) */
   @media (max-width:700px){
@@ -188,27 +182,6 @@
     }
     .subfooter .links,.subfooter .sitemap{justify-content:center;justify-self:center;gap:14px}
   }
-  /* === Drawer: full screen + visible bottom CTA === */
-  .mobile-menu{
-    /* make it truly full-height across Android/iOS */
-    height: 100svh;
-    min-height: 100vh;
-    max-height: 100dvh;
-  }
-
-  .mobile-cta{
-    margin-top: auto;
-    padding: 16px 16px calc(16px + env(safe-area-inset-bottom));
-    text-align: center;
-  }
-
-  .mobile-cta .btn.primary{
-    display: inline-flex !important;   /* force visible inside drawer */
-    width: 100%;
-    max-width: 320px;
-    margin-inline: auto;
-    justify-content: center;
-  }
 
   /* === Only hide the HEADER CTA on mobile, not every primary button === */
   @media (max-width: 900px){
@@ -217,45 +190,6 @@
     .menu-toggle{ display: inline-block; }
     .nav ul{ display: none; }
   }
-
-  /* Drawer fills screen; only it can scroll */
-.mobile-menu{
-  height: 100dvh;               /* modern viewport unit */
-  max-height: 100svh;           /* iOS safe */
-  min-height: 100vh;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Sticky bottom CTA (always visible) */
-.mobile-cta{
-  position: sticky;
-  bottom: 20px;
-  padding: 16px 16px calc(16px + env(safe-area-inset-bottom));
-  text-align: center;
-  background: linear-gradient(180deg, rgba(15,15,16,0), rgba(15,15,16,.92) 45%, #0f0f10 100%);
-  border-top: 1px solid var(--line);
-}
-.mobile-cta .btn.primary{
-  display: inline-flex !important;
-  width: 100%;
-  max-width: 340px;
-  margin: 0 auto;
-  justify-content: center;
-}
-
-/* Lock page behind the drawer */
-html.menu-open, body.menu-open{ height:100%; overflow:hidden; }
-.menu-overlay{ touch-action: none; }      /* capture touch so page doesn't scroll */
-
-/* Only hide the HEADER primary btn on mobile, not others */
-@media (max-width:900px){
-  .nav .btn.primary{ display:none !important; }
-}
-
-/* === Drawer: pin CTA without scrolling the page === */
 
 /* 3-row grid: [head] [scrollable links] [CTA] */
 .mobile-menu{
@@ -292,7 +226,6 @@ html.menu-open, body.menu-open{ height:100%; overflow:hidden; }
 
 /* hard-lock page scroll when open (keep these) */
 html.menu-open, body.menu-open{ height:100%; overflow:hidden; }
-
 
 </style>
 
