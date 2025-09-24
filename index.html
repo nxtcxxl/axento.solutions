@@ -218,6 +218,44 @@
     .nav ul{ display: none; }
   }
 
+  /* Drawer fills screen; only it can scroll */
+.mobile-menu{
+  height: 100dvh;               /* modern viewport unit */
+  max-height: 100svh;           /* iOS safe */
+  min-height: 100vh;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Sticky bottom CTA (always visible) */
+.mobile-cta{
+  position: sticky;
+  bottom: 0;
+  padding: 16px 16px calc(16px + env(safe-area-inset-bottom));
+  text-align: center;
+  background: linear-gradient(180deg, rgba(15,15,16,0), rgba(15,15,16,.92) 45%, #0f0f10 100%);
+  border-top: 1px solid var(--line);
+}
+.mobile-cta .btn.primary{
+  display: inline-flex !important;
+  width: 100%;
+  max-width: 340px;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+/* Lock page behind the drawer */
+html.menu-open, body.menu-open{ height:100%; overflow:hidden; }
+.menu-overlay{ touch-action: none; }      /* capture touch so page doesn't scroll */
+
+/* Only hide the HEADER primary btn on mobile, not others */
+@media (max-width:900px){
+  .nav .btn.primary{ display:none !important; }
+}
+
+
 </style>
 
 
