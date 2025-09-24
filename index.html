@@ -146,16 +146,24 @@
 
   /* Drawer (wider, solid bg, Pixel-safe offscreen) */
   .mobile-menu{
-    position:fixed;inset:0 0 0 auto;
-    width:min(92vw,420px);
-    background:#0f0f10;border-left:1px solid var(--line);
-    box-shadow:-20px 0 40px rgba(0,0,0,.35);
-    transform:translate3d(105%,0,0);      /* fully offscreen on Android */
-    transition:transform .25s ease;
-    will-change:transform;
-    z-index:120;display:flex;flex-direction:column;
-    padding-bottom:calc(10px + env(safe-area-inset-bottom));
-    visibility:hidden;pointer-events:none;
+    position: fixed;
+    inset: 0;              /* закриває весь екран */
+    width: 100vw;          /* повна ширина */
+    max-width: none;
+    background: #0f0f10;
+    transform: translate3d(0,0,0); /* якщо клас .open вже додається — можна лишити як є */
+    transition: transform .25s ease;
+    will-change: transform;
+    z-index: 120;
+    display: grid;         /* ваш фінальний грід знизу лишається */
+    grid-template-rows: auto 1fr auto;
+    overflow: hidden;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom));
+    visibility: visible;
+    pointer-events: auto;
+    /* прибираємо непотрібні бордер/тінь для повноекранного */
+    border-left: 0;
+    box-shadow: none;
   }
   .mobile-menu.open{
     transform:translate3d(0,0,0);
@@ -283,7 +291,6 @@ html.menu-open, body.menu-open{ height:100%; overflow:hidden; }
       <p class="lead">Structure your operations, optimize processes, and drive business success.</p>
       <div class="cta-row">
         <a class="btn primary" href="services.html">Learn more</a>
-        <a class="btn ghost" href="https://calendly.com/max-axento/30min">Book a call</a>
       </div>
     </div>
     <div class="right"></div>
