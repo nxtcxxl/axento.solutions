@@ -9,29 +9,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="js/footerForm.js" defer></script>
   <script src="js/menu.js"></script>
-  
   <style>
     :root{--bg:#0f0f10;--bg-2:#171717;--text:#f2f2f2;--muted:#a9a9a9;--accent:#e52222;--card:#121212;--card-2:#1c1c1c;--line:#262626;--radius:18px;--shadow:0 10px 30px rgba(0,0,0,.35);--container:1180px}
-
     *{box-sizing:border-box}
     html,body{overflow-x:hidden;}
-    /* синхрон з index: плавна прокрутка та тач-поведінка */
-    body{
-      margin:0;background:var(--bg);color:var(--text);
-      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
-      overscroll-behavior-x:none;touch-action:pan-y;
-    }
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;overscroll-behavior-x:none;touch-action:pan-y;}
     a{color:inherit;text-decoration:none}
     img{max-width:100%;display:block}
     .container{max-width:var(--container);margin:0 auto;padding:0 24px}
 
-    /* ===== NAV (вирівняно з index) ===== */
-    header{
-      position:sticky;top:0;z-index:100;
-      background:rgba(15,15,16,.75);
-      backdrop-filter:saturate(160%) blur(8px);
-      border-bottom:1px solid var(--line);
-    }
+    /* ===== NAV ===== */
+    header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,.75);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid var(--line)}
     .nav{display:flex;align-items:center;gap:28px;padding:14px 0}
     .logo{display:flex;align-items:center;margin-right:32px}
     .logo-img{height:22px;display:block}
@@ -46,7 +34,6 @@
     .btn.primary:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(229,34,34,.45)}
     .btn.ghost{border:1px solid var(--line);color:#fff;background:transparent}
 
-    /* Desktop polish (як на index) */
     @media (min-width:981px){.logo-img{height:24px}}
     @media (min-width:1440px){.nav .logo{margin-right:44px}.logo-img{height:26px}}
     .nav ul{gap:28px;margin-left:4px}
@@ -110,7 +97,6 @@
     .field{width:100%;padding:10px 12px;border-radius:10px;background:#151515;border:1px solid var(--line);color:#fff}
     .foot-cta{display:flex;gap:8px;align-items:end}
 
-    /* Subfooter узгоджено зі стилем головної */
     .subfooter{
       display:grid;
       grid-template-columns:1fr auto 1fr;
@@ -123,11 +109,10 @@
     .subfooter .copyright{justify-self:center;text-align:center;opacity:.9}
     .subfooter .sitemap{display:flex;gap:18px;flex-wrap:wrap;justify-self:end}
 
-    /* ===== MOBILE MENU (вирівняно по поведінці) ===== */
+    /* ===== MOBILE MENU (як на index) ===== */
     .menu-toggle{margin-left:auto;display:none;border:0;background:transparent;padding:10px 12px}
     .menu-toggle .bar{display:block;width:24px;height:2px;background:#fff;margin:4px 0;border-radius:2px}
 
-    /* overlay як на index: напівпрозорий + легкий blur, правильний стек */
     .menu-overlay{
       position:fixed;inset:0;background:rgba(0,0,0,.55);
       backdrop-filter:saturate(140%) blur(2px);
@@ -135,25 +120,20 @@
     }
     .menu-overlay.show{display:block}
 
-    /* drawer: повна висота, 3 ряди, поверх overlay */
     .mobile-menu{
-      position:fixed;inset:0;
-      width:100vw;max-width:none;
+      position:fixed;inset:0 0 0 auto;
+      width:min(92vw,420px);
       background:#0f0f10;border-left:1px solid var(--line);
       box-shadow:-20px 0 40px rgba(0,0,0,.35);
       transform:translate3d(105%,0,0);
       transition:transform .25s ease;will-change:transform;
       z-index:120;
-      height:100dvh;max-height:100svh;min-height:100vh;
       display:grid;grid-template-rows:auto 1fr auto;
       overflow:hidden;
       padding-bottom:calc(10px + env(safe-area-inset-bottom));
       visibility:hidden;pointer-events:none;
     }
-    .mobile-menu.open{
-      transform:translate3d(0,0,0);
-      visibility:visible;pointer-events:auto;
-    }
+    .mobile-menu.open{transform:translate3d(0,0,0);visibility:visible;pointer-events:auto}
 
     .mobile-head{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid var(--line)}
     .mobile-head .brand{font-weight:800;letter-spacing:.2px;font-size:16px}
@@ -168,18 +148,13 @@
       position:static;padding:16px 16px calc(16px + env(safe-area-inset-bottom));
       text-align:center;background:#0f0f10;
     }
-    .mobile-cta::before{
-      content:"";display:block;height:1px;background:var(--line);
-      margin-bottom:12px;
-    }
     .mobile-cta .btn.primary{
-      display:inline-flex !important;width:100%;max-width:340px;justify-content:center;margin:50px auto;
+      display:inline-flex;width:100%;max-width:340px;justify-content:center;margin:50px auto;
     }
 
-    /* Жорстке блокування скролу під відкритим меню (узгоджено) */
     html.menu-open, body.menu-open{height:100%;overflow:hidden}
 
-    /* ===== Responsive (узгодження з index) ===== */
+    /* ===== Responsive ===== */
     @media (max-width:1100px){
       .services-grid{grid-template-columns:1fr 1fr}
       .steps{grid-template-columns:repeat(3,1fr)}
@@ -187,15 +162,19 @@
       .models{grid-template-columns:1fr}
     }
 
-    /* Показуємо бургер, ховаємо лише header-кнопку і список навігації */
-    @media (max-width:900px){
-      .btn.primary{display:inline-flex;}            /* глобально активні */
-      .nav .btn.primary{display:none !important;}   /* але в хедері — схована */
-      .menu-toggle{display:inline-block}
-      .nav ul{display:none}
+    @media (max-width:1080px){
+      .nav{flex-wrap:wrap;row-gap:10px}
+      .nav .logo{margin-right:0}
     }
 
-    /* Tablet/phone layout дрібні підлаштування навбару */
+    @media (max-width:900px){
+      .btn.primary{display:inline-flex}
+      .nav .btn.primary{display:none !important}
+      .menu-toggle{display:inline-block}
+      .nav ul{display:none}
+      .nav .spacer:first-of-type{display:none}
+    }
+
     @media (max-width:680px){
       h1{font-size:40px}
       .services-grid{grid-template-columns:1fr}
@@ -203,11 +182,8 @@
       .pricing{grid-template-columns:1fr}
       .faq{grid-template-columns:1fr}
       .footer-grid{grid-template-columns:1fr}
-      .nav{flex-wrap:wrap;row-gap:10px}
-      .logo{margin-right:0}
     }
 
-    /* Subfooter на телефонах — як на index */
     @media (max-width:700px){
       .subfooter{
         grid-template-columns:1fr;
@@ -219,6 +195,7 @@
       .subfooter .links,.subfooter .sitemap{justify-content:center;justify-self:center;gap:14px}
     }
   </style>
+
 
 </head>
 <body>
