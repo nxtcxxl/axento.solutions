@@ -12,18 +12,29 @@
   
   <style>
     :root{--bg:#0f0f10;--bg-2:#171717;--text:#f2f2f2;--muted:#a9a9a9;--accent:#e52222;--card:#121212;--card-2:#1c1c1c;--line:#262626;--radius:18px;--shadow:0 10px 30px rgba(0,0,0,.35);--container:1180px}
+
     *{box-sizing:border-box}
     html,body{overflow-x:hidden;}
-    body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+    /* синхрон з index: плавна прокрутка та тач-поведінка */
+    body{
+      margin:0;background:var(--bg);color:var(--text);
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+      overscroll-behavior-x:none;touch-action:pan-y;
+    }
     a{color:inherit;text-decoration:none}
     img{max-width:100%;display:block}
     .container{max-width:var(--container);margin:0 auto;padding:0 24px}
 
-    /* NAV */
-    header{position:sticky;top:0;z-index:40;background:rgba(15,15,16,.75);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid var(--line)}
+    /* ===== NAV (вирівняно з index) ===== */
+    header{
+      position:sticky;top:0;z-index:100;
+      background:rgba(15,15,16,.75);
+      backdrop-filter:saturate(160%) blur(8px);
+      border-bottom:1px solid var(--line);
+    }
     .nav{display:flex;align-items:center;gap:28px;padding:14px 0}
     .logo{display:flex;align-items:center;margin-right:32px}
-    .logo-img{height:24px}
+    .logo-img{height:22px;display:block}
     .nav ul{list-style:none;margin:0;padding:0;display:flex;gap:28px}
     .nav a.link{color:#d8d8d8;font-weight:600}
     .nav a.link:hover{color:#fff}
@@ -35,7 +46,12 @@
     .btn.primary:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(229,34,34,.45)}
     .btn.ghost{border:1px solid var(--line);color:#fff;background:transparent}
 
-    /* HERO */
+    /* Desktop polish (як на index) */
+    @media (min-width:981px){.logo-img{height:24px}}
+    @media (min-width:1440px){.nav .logo{margin-right:44px}.logo-img{height:26px}}
+    .nav ul{gap:28px;margin-left:4px}
+
+    /* ===== HERO / TYPO ===== */
     .hero{padding:64px 0;background:linear-gradient(180deg,rgba(255,255,255,.02),transparent 40%)}
     .eyebrow{font-size:14px;color:var(--muted);letter-spacing:.28px;margin-bottom:8px}
     h1{font-size:52px;line-height:1.05;margin:8px 0 12px;font-weight:800}
@@ -46,46 +62,46 @@
     section{padding:28px 0}
     h2{font-size:34px;margin:0 0 18px}
 
-    /* SERVICES GRID */
+    /* ===== SERVICES GRID ===== */
     .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
     .svc{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px}
     .svc h3{margin:0 0 8px}
     .svc p{margin:0 0 10px;color:#cdcdcd}
     .svc ul{margin:0;padding-left:18px;color:#c7c7c7}
 
-    /* PROCESS */
+    /* ===== PROCESS ===== */
     .process{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(229,34,34,.06),transparent 80%)}
     .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
     .step{background:var(--card-2);border:1px solid var(--line);border-radius:14px;padding:16px}
-    .badge{display:inline-flex;align-items:center;justify-content:center;height:28px;width:28px;border-radius:9px;border:2px solid var(--accent);color:var(--accent);font-weight:800;margin-bottom:8px; margin-right:8px;}
+    .badge{display:inline-flex;align-items:center;justify-content:center;height:28px;width:28px;border-radius:9px;border:2px solid var(--accent);color:var(--accent);font-weight:800;margin-bottom:8px;margin-right:8px}
     .step p{margin:0;color:#cfcfcf;font-size:14px}
 
-    /* PACKAGES */
+    /* ===== PACKAGES ===== */
     .pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
     .plan{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;position:relative}
     .plan .price{font-size:22px;font-weight:800;margin:8px 0 8px}
     .plan ul{margin:0;padding-left:18px;color:#cfcfcf}
     .plan .btn{margin-top:16px}
-    .most{outline:2px solid var(--accent);}
+    .most{outline:2px solid var(--accent)}
     .note{color:#b9b9b9;font-size:13px;margin-top:8px}
 
-    /* MODELS */
+    /* ===== MODELS ===== */
     .models{display:grid;grid-template-columns:1fr 1fr;gap:22px}
     .box{background:var(--card-2);border:1px solid var(--line);border-radius:16px;padding:20px}
 
-    /* FAQ */
+    /* ===== FAQ ===== */
     .faq{display:grid;grid-template-columns:1fr 1fr;gap:18px}
     .qa{background:var(--card-2);border:1px solid var(--line);border-radius:14px;padding:16px}
     .qa h4{margin:0 0 6px}
     .qa p{margin:0;color:#cfcfcf}
 
-    /* CTA */
+    /* ===== CTA ===== */
     .cta{padding:56px 0;border-top:1px solid var(--line)}
     .cta .inner{max-width:860px;margin:0 auto;text-align:center}
     .cta h2{margin:0 0 10px}
     .cta .lead{max-width:740px;margin:0 auto 18px;color:#d0d0d0;font-size:16px}
 
-    /* FOOTER */
+    /* ===== FOOTER ===== */
     footer{border-top:1px solid var(--line);padding:28px 0 34px}
     .footer-grid{display:grid;grid-template-columns:1.2fr .9fr 1fr;gap:28px}
     .muted{color:var(--muted)}
@@ -93,27 +109,42 @@
     .socials a{display:flex;align-items:center;justify-content:center;height:36px;width:36px;border-radius:10px;border:1px solid var(--line)}
     .field{width:100%;padding:10px 12px;border-radius:10px;background:#151515;border:1px solid var(--line);color:#fff}
     .foot-cta{display:flex;gap:8px;align-items:end}
-    .subfooter{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:14px;margin-top:18px;color:#bdbdbd;font-size:12px}
 
-    /* ---------- MOBILE MENU (full-screen drawer) ---------- */
+    /* Subfooter узгоджено зі стилем головної */
+    .subfooter{
+      display:grid;
+      grid-template-columns:1fr auto 1fr;
+      gap:12px;align-items:center;
+      border-top:1px solid var(--line);
+      padding:12px 0 calc(12px + env(safe-area-inset-bottom));
+      color:#bdbdbd;font-size:13px
+    }
+    .subfooter .links{display:flex;gap:18px;flex-wrap:wrap;justify-self:start}
+    .subfooter .copyright{justify-self:center;text-align:center;opacity:.9}
+    .subfooter .sitemap{display:flex;gap:18px;flex-wrap:wrap;justify-self:end}
+
+    /* ===== MOBILE MENU (вирівняно по поведінці) ===== */
     .menu-toggle{margin-left:auto;display:none;border:0;background:transparent;padding:10px 12px}
     .menu-toggle .bar{display:block;width:24px;height:2px;background:#fff;margin:4px 0;border-radius:2px}
 
-    /* Overlay — робимо непрозорим, щоб сайт не просвічував */
+    /* overlay як на index: напівпрозорий + легкий blur, правильний стек */
     .menu-overlay{
-      position:fixed;inset:0;background:#0f0f10;
+      position:fixed;inset:0;background:rgba(0,0,0,.55);
+      backdrop-filter:saturate(140%) blur(2px);
       z-index:110;display:none;
     }
     .menu-overlay.show{display:block}
 
-    /* Drawer: повноекранний + 3-ряди гріда (head / links / CTA) */
+    /* drawer: повна висота, 3 ряди, поверх overlay */
     .mobile-menu{
-      position:fixed;inset:0;                 /* закриває весь екран */
+      position:fixed;inset:0;
       width:100vw;max-width:none;
-      background:#0f0f10;
-      transform:translate3d(105%,0,0);        /* offscreen праворуч */
+      background:#0f0f10;border-left:1px solid var(--line);
+      box-shadow:-20px 0 40px rgba(0,0,0,.35);
+      transform:translate3d(105%,0,0);
       transition:transform .25s ease;will-change:transform;
       z-index:120;
+      height:100dvh;max-height:100svh;min-height:100vh;
       display:grid;grid-template-rows:auto 1fr auto;
       overflow:hidden;
       padding-bottom:calc(10px + env(safe-area-inset-bottom));
@@ -128,29 +159,27 @@
     .mobile-head .brand{font-weight:800;letter-spacing:.2px;font-size:16px}
     .menu-close{font-size:22px;background:transparent;border:0;color:#fff;padding:6px}
 
-    /* середня зона скролиться, низ і верх — фіксовані */
     .mobile-links{list-style:none;margin:0;padding:6px 8px;overflow:auto;-webkit-overflow-scrolling:touch;min-height:0}
     .mobile-links li{border-bottom:1px solid #1c1c1c}
     .mobile-links a{display:flex;justify-content:space-between;align-items:center;padding:14px 10px;font-weight:600}
     .mobile-links a::after{content:"›";opacity:.6}
 
-    /* CTA-рядок унизу + керована лінія */
     .mobile-cta{
       position:static;padding:16px 16px calc(16px + env(safe-area-inset-bottom));
       text-align:center;background:#0f0f10;
     }
     .mobile-cta::before{
       content:"";display:block;height:1px;background:var(--line);
-      margin-bottom:12px; /* рухаємо «полосу» вниз/вгору */
+      margin-bottom:12px;
     }
     .mobile-cta .btn.primary{
-      display:inline-flex;width:100%;max-width:340px;justify-content:center;margin:40px auto; /* рух кнопки */
+      display:inline-flex !important;width:100%;max-width:340px;justify-content:center;margin:50px auto;
     }
 
-    /* Лочимо скрол сторінки під відкритим меню */
+    /* Жорстке блокування скролу під відкритим меню (узгоджено) */
     html.menu-open, body.menu-open{height:100%;overflow:hidden}
 
-    /* Responsive */
+    /* ===== Responsive (узгодження з index) ===== */
     @media (max-width:1100px){
       .services-grid{grid-template-columns:1fr 1fr}
       .steps{grid-template-columns:repeat(3,1fr)}
@@ -158,14 +187,15 @@
       .models{grid-template-columns:1fr}
     }
 
+    /* Показуємо бургер, ховаємо лише header-кнопку і список навігації */
     @media (max-width:900px){
-      /* Показуємо бургер, ховаємо навігаційний список і лише header-кнопку */
+      .btn.primary{display:inline-flex;}            /* глобально активні */
+      .nav .btn.primary{display:none !important;}   /* але в хедері — схована */
       .menu-toggle{display:inline-block}
       .nav ul{display:none}
-      .nav .btn.primary{display:none !important}
-      .btn.primary{display:inline-flex} /* інші primary залишаються видимими */
     }
 
+    /* Tablet/phone layout дрібні підлаштування навбару */
     @media (max-width:680px){
       h1{font-size:40px}
       .services-grid{grid-template-columns:1fr}
@@ -175,6 +205,18 @@
       .footer-grid{grid-template-columns:1fr}
       .nav{flex-wrap:wrap;row-gap:10px}
       .logo{margin-right:0}
+    }
+
+    /* Subfooter на телефонах — як на index */
+    @media (max-width:700px){
+      .subfooter{
+        grid-template-columns:1fr;
+        text-align:center;
+        row-gap:14px;
+        font-size:11px;
+        padding:8px 0 calc(10px + env(safe-area-inset-bottom));
+      }
+      .subfooter .links,.subfooter .sitemap{justify-content:center;justify-self:center;gap:14px}
     }
   </style>
 
