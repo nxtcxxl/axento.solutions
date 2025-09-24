@@ -151,9 +151,9 @@
     background:#0f0f10;border-left:1px solid var(--line);
     box-shadow:-20px 0 40px rgba(0,0,0,.35);
     transform:translate3d(105%,0,0);      /* fully offscreen on Android */
-    transition:transform .25s ease;
-    will-change:transform;
-    z-index:120;display:flex;flex-direction:column;
+    transition:transform .25s ease;will-change:transform;
+    z-index:120;
+    display:flex;flex-direction:column;
     padding-bottom:calc(10px + env(safe-area-inset-bottom));
     visibility:hidden;pointer-events:none;
   }
