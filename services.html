@@ -8,19 +8,21 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="js/footerForm.js" defer></script>
+  <script src="js/menu.js"></script>
   <style>
     :root{--bg:#0f0f10;--bg-2:#171717;--text:#f2f2f2;--muted:#a9a9a9;--accent:#e52222;--card:#121212;--card-2:#1c1c1c;--line:#262626;--radius:18px;--shadow:0 10px 30px rgba(0,0,0,.35);--container:1180px}
     *{box-sizing:border-box}
-    body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+    html,body{overflow-x:hidden;}                 /* avoid horizontal peek on Android */
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;overscroll-behavior-x:none;touch-action:pan-y;}
     a{color:inherit;text-decoration:none}
     img{max-width:100%;display:block}
     .container{max-width:var(--container);margin:0 auto;padding:0 24px}
 
     /* NAV */
-    header{position:sticky;top:0;z-index:40;background:rgba(15,15,16,.75);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid var(--line)}
+    header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,.75);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid var(--line)}
     .nav{display:flex;align-items:center;gap:28px;padding:14px 0}
     .logo{display:flex;align-items:center;margin-right:32px}
-    .logo-img{height:24px}
+    .logo-img{height:24px;display:block}
     .nav ul{list-style:none;margin:0;padding:0;display:flex;gap:28px}
     .nav a.link{color:#d8d8d8;font-weight:600}
     .nav a.link:hover{color:#fff}
@@ -54,7 +56,7 @@
     .process{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(229,34,34,.06),transparent 80%)}
     .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
     .step{background:var(--card-2);border:1px solid var(--line);border-radius:14px;padding:16px}
-    .badge{display:inline-flex;align-items:center;justify-content:center;height:28px;width:28px;border-radius:9px;border:2px solid var(--accent);color:var(--accent);font-weight:800;margin-bottom:8px; margin-right:8px;}
+    .badge{display:inline-flex;align-items:center;justify-content:center;height:28px;width:28px;border-radius:9px;border:2px solid var(--accent);color:var(--accent);font-weight:800;margin-bottom:8px;margin-right:8px}
     .step p{margin:0;color:#cfcfcf;font-size:14px}
 
     /* PACKAGES */
@@ -63,7 +65,7 @@
     .plan .price{font-size:22px;font-weight:800;margin:8px 0 8px}
     .plan ul{margin:0;padding-left:18px;color:#cfcfcf}
     .plan .btn{margin-top:16px}
-    .most{outline:2px solid var(--accent);}
+    .most{outline:2px solid var(--accent)}
     .note{color:#b9b9b9;font-size:13px;margin-top:8px}
 
     /* MODELS */
@@ -92,9 +94,85 @@
     .foot-cta{display:flex;gap:8px;align-items:end}
     .subfooter{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:14px;margin-top:18px;color:#bdbdbd;font-size:12px}
 
+    /* ---------- MOBILE MENU (full-screen drawer, 3-row grid) ---------- */
+    .menu-toggle{margin-left:auto;display:none;border:0;background:transparent;padding:10px 12px}
+    .menu-toggle .bar{display:block;width:24px;height:2px;background:#fff;margin:4px 0;border-radius:2px}
+
+    /* Overlay (if використовуєш окремий елемент) — робимо його непрозорим */
+    .menu-overlay{
+      position:fixed;inset:0;background:#0f0f10;
+      z-index:110;display:none;
+    }
+    .menu-overlay.show{display:block}
+
+    /* Drawer: повноекранний + грід (head / links / CTA) */
+    .mobile-menu{
+      position:fixed;inset:0;               /* закриває весь екран */
+      width:100vw;max-width:none;
+      background:#0f0f10;
+      transform:translate3d(105%,0,0);      /* offscreen */
+      transition:transform .25s ease;will-change:transform;
+      z-index:120;display:grid;grid-template-rows:auto 1fr auto;overflow:hidden;
+      padding-bottom:calc(10px + env(safe-area-inset-bottom));
+      visibility:hidden;pointer-events:none;
+    }
+    .mobile-menu.open{
+      transform:translate3d(0,0,0);
+      visibility:visible;pointer-events:auto;
+    }
+
+    .mobile-head{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid var(--line)}
+    .mobile-head .brand{font-weight:800;letter-spacing:.2px;font-size:16px}
+    .menu-close{font-size:22px;background:transparent;border:0;color:#fff;padding:6px}
+
+    /* середня зона скролиться */
+    .mobile-links{list-style:none;margin:0;padding:6px 8px;overflow:auto;-webkit-overflow-scrolling:touch;min-height:0}
+    .mobile-links li{border-bottom:1px solid #1c1c1c}
+    .mobile-links a{display:flex;justify-content:space-between;align-items:center;padding:14px 10px;font-weight:600}
+    .mobile-links a::after{content:"›";opacity:.6}
+
+    /* нижній CTA — керована лінія + safe-area */
+    .mobile-cta{
+      position:static;padding:16px 16px calc(16px + env(safe-area-inset-bottom));
+      text-align:center;background:#0f0f10;
+    }
+    .mobile-cta::before{
+      content:"";display:block;height:1px;background:var(--line);
+      margin-bottom:12px; /* рухаємо «полосу» вниз/вгору */
+    }
+    .mobile-cta .btn.primary{
+      display:inline-flex;width:100%;max-width:340px;justify-content:center;margin:40px auto; /* рух кнопки */
+    }
+
+    /* Лочимо скрол сторінки під відкритим меню */
+    html.menu-open, body.menu-open{height:100%;overflow:hidden}
+
     /* Responsive */
-    @media (max-width:1100px){.services-grid{grid-template-columns:1fr 1fr}.steps{grid-template-columns:repeat(3,1fr)}.pricing{grid-template-columns:1fr 1fr}.models{grid-template-columns:1fr}}
-    @media (max-width:680px){h1{font-size:40px}.services-grid{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.pricing{grid-template-columns:1fr}.faq{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr}.nav{flex-wrap:wrap;row-gap:10px}.nav ul{order:3;width:100%;justify-content:space-between}.logo{margin-right:0}}
+    @media (max-width:1100px){
+      .services-grid{grid-template-columns:1fr 1fr}
+      .steps{grid-template-columns:repeat(3,1fr)}
+      .pricing{grid-template-columns:1fr 1fr}
+      .models{grid-template-columns:1fr}
+    }
+
+    @media (max-width:900px){
+      /* Показуємо бургер, ховаємо нав-список і тільки header-кнопку */
+      .menu-toggle{display:inline-block}
+      .nav ul{display:none}
+      .nav .btn.primary{display:none !important}
+      .btn.primary{display:inline-flex} /* інші primary залишаються видимими */
+    }
+
+    @media (max-width:680px){
+      h1{font-size:40px}
+      .services-grid{grid-template-columns:1fr}
+      .steps{grid-template-columns:1fr 1fr}
+      .pricing{grid-template-columns:1fr}
+      .faq{grid-template-columns:1fr}
+      .footer-grid{grid-template-columns:1fr}
+      .nav{flex-wrap:wrap;row-gap:10px}
+      .logo{margin-right:0}
+    }
   </style>
 </head>
 <body>
@@ -334,4 +412,3 @@
 </body>
 
 </html>
->>>>>>> 171dd60bb2df041bbad1faa9156c008a775fe85a
