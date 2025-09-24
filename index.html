@@ -255,6 +255,44 @@ html.menu-open, body.menu-open{ height:100%; overflow:hidden; }
   .nav .btn.primary{ display:none !important; }
 }
 
+/* === Drawer: pin CTA without scrolling the page === */
+
+/* 3-row grid: [head] [scrollable links] [CTA] */
+.mobile-menu{
+  height: 100dvh;
+  max-height: 100svh;
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  overflow: hidden;                  /* drawer itself doesn't scroll */
+}
+
+/* middle area scrolls if content is long */
+.mobile-links{
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  min-height: 0;                     /* allow grid child to shrink */
+}
+
+/* bottom CTA is a real bottom row (no sticky) */
+.mobile-cta{
+  position: static !important;       /* override any previous sticky */
+  padding: 16px 16px calc(16px + env(safe-area-inset-bottom));
+  text-align: center;
+  background: #0f0f10;
+  border-top: 1px solid var(--line);
+}
+.mobile-cta .btn.primary{
+  display: inline-flex !important;
+  width: 100%;
+  max-width: 340px;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+/* hard-lock page scroll when open (keep these) */
+html.menu-open, body.menu-open{ height:100%; overflow:hidden; }
+
 
 </style>
 
