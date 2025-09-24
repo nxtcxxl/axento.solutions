@@ -215,12 +215,21 @@
   text-align: center;
   background: #0f0f10;
 }
+
+.mobile-cta::before{
+  content: "";
+  display: block;
+  height: 1px;
+  background: var(--line);
+  margin-bottom: 12px; /* регулюй це значення, щоб рухати полосу вниз/вгору */
+}
+
 .mobile-cta .btn.primary{
   display: inline-flex !important;
   width: 100%;
   max-width: 340px;
   justify-content: center;
-  margin: 10px auto;
+  margin: 50px auto;
 }
 
 /* hard-lock page scroll when open (keep these) */
