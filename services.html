@@ -28,7 +28,7 @@
     .nav a.link:hover{color:#fff}
     .nav a.active{color:#fff;position:relative}
     .nav a.active:after{content:"";position:absolute;left:0;right:0;bottom:-12px;height:2px;background:var(--accent);border-radius:2px}
-    .nav .spacer{flex:1}
+    .nav .spacer{display: none;}
     .btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 16px;border-radius:999px;font-weight:700;border:1px solid transparent;transition:all .18s ease;line-height:1}
     .btn.primary{background:var(--accent);color:#fff;box-shadow:0 6px 16px rgba(229,34,34,.35)}
     .btn.primary:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(229,34,34,.45)}
@@ -183,7 +183,7 @@
     }
 
     @media (max-width:900px){
-      .nav{flex-wrap:wrap;row-gap:10px}
+      .nav{flex-wrap:nowrap;row-gap:10px}
       .nav .logo{margin-right:0}
     }
 
