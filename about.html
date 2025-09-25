@@ -7,22 +7,26 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <script src="js/footerForm.js" defer></script>  
+  <script src="js/footerForm.js" defer></script>
+  <!-- Optional: keep if you already use it -->
+  <script src="js/menu.js" defer></script>
   <style>
     :root{
       --bg:#0f0f10; --bg-2:#171717; --text:#f2f2f2; --muted:#a9a9a9; --accent:#e52222;
       --card:#121212; --card-2:#1c1c1c; --line:#262626; --radius:18px; --shadow:0 10px 30px rgba(0,0,0,.35); --container:1180px;
     }
     *{box-sizing:border-box}
+    html,body{overflow-x:hidden}
     body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
     a{color:inherit;text-decoration:none}
     .container{max-width:var(--container);margin:0 auto;padding:0 24px}
     img{max-width:100%;display:block}
-    /* NAV */
-    header{position:sticky;top:0;z-index:40;background:rgba(15,15,16,.75);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid var(--line)}
+
+    /* ===== NAV ===== */
+    header{position:sticky;top:0;z-index:100;background:rgba(15,15,16,.75);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid var(--line)}
     .nav{display:flex;align-items:center;gap:28px;padding:14px 0}
     .logo{display:flex;align-items:center;margin-right:32px}
-    .logo-img{height:24px}
+    .logo-img{height:22px}
     .nav ul{list-style:none;margin:0;padding:0;display:flex;gap:28px}
     .nav a.link{color:#d8d8d8;font-weight:600}
     .nav a.link:hover{color:#fff}
@@ -34,7 +38,7 @@
     .btn.primary:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(229,34,34,.45)}
     .btn.ghost{border:1px solid var(--line);color:#fff;background:transparent}
 
-    /* HERO */
+    /* ===== HERO ===== */
     .hero{padding:64px 0;background:linear-gradient(180deg,rgba(255,255,255,.02),transparent 40%)}
     .eyebrow{font-size:14px;color:var(--muted);letter-spacing:.28px;margin-bottom:8px}
     h1{font-size:52px;line-height:1.05;margin:8px 0 12px;font-weight:800}
@@ -42,7 +46,7 @@
     .breadcrumbs{margin:6px 0 10px;color:#b9b9b9;font-size:14px}
     .breadcrumbs a{color:#cfcfcf}
 
-    /* SECTIONS */
+    /* ===== SECTIONS ===== */
     section{padding:64px 0}
     h2{font-size:34px;margin:0 0 18px}
 
@@ -59,7 +63,7 @@
     .values-header{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center}
     .values-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:8px}
     .value-item{display:flex;gap:14px;padding:16px 14px;border:1px solid var(--line);border-radius:14px;background:var(--card-2)}
-    .value-badge{min-width:36px;height:36px;border:2px solid var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent);}
+    .value-badge{min-width:36px;height:36px;border:2px solid var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent)}
     .value-title{font-weight:800;margin-bottom:6px}
     .value-desc{color:#cfcfcf}
 
@@ -78,7 +82,7 @@
     .mile .year{font-weight:800}
     .mile .text{color:#cfcfcf}
 
-    /* CTA + FOOTER (same look as landing) */
+    /* CTA + FOOTER */
     .cta{padding:56px 0;border-top:1px solid var(--line)}
     .cta .inner{max-width:860px;margin:0 auto;text-align:center}
     .cta h2{margin:0 0 10px}
@@ -94,8 +98,46 @@
     .foot-cta{display:flex;gap:8px;align-items:end}
     .subfooter{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:14px;margin-top:18px;color:#bdbdbd;font-size:12px}
 
-    /* RESPONSIVE */
-    @media (max-width: 980px){
+    /* ===== MOBILE MENU (match index/contact/services) ===== */
+    .menu-toggle{margin-left:auto;display:none;border:0;background:transparent;padding:10px 12px}
+    .menu-toggle .bar{display:block;width:24px;height:2px;background:#fff;margin:4px 0;border-radius:2px}
+
+    .menu-overlay{
+      position:fixed;inset:0;background:rgba(0,0,0,.55);
+      backdrop-filter:saturate(140%) blur(2px);
+      z-index:110;display:none;
+    }
+    .menu-overlay.show{display:block}
+
+    .mobile-menu{
+      position:fixed;inset:0 0 0 auto;
+      width:min(92vw,420px);
+      background:#0f0f10;border-left:1px solid var(--line);
+      box-shadow:-20px 0 40px rgba(0,0,0,.35);
+      transform:translate3d(105%,0,0);
+      transition:transform .25s ease;will-change:transform;
+      z-index:120;
+      padding-bottom:calc(10px + env(safe-area-inset-bottom));
+      visibility:hidden;pointer-events:none;
+
+      /* 3-row layout: head / scrollable links / CTA */
+      height:100dvh;max-height:100svh;min-height:100vh;
+      display:grid;grid-template-rows:auto 1fr auto;overflow:hidden;
+    }
+    .mobile-menu.open{transform:translate3d(0,0,0);visibility:visible;pointer-events:auto}
+    .mobile-head{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid var(--line)}
+    .menu-close{font-size:22px;background:transparent;border:0;color:#fff;padding:6px}
+    .mobile-links{list-style:none;margin:0;padding:6px 8px;overflow:auto;-webkit-overflow-scrolling:touch;min-height:0}
+    .mobile-links li{border-bottom:1px solid #1c1c1c}
+    .mobile-links a{display:flex;justify-content:space-between;align-items:center;padding:14px 10px;font-weight:600}
+    .mobile-links a::after{content:"›";opacity:.6}
+    .mobile-cta{margin-top:auto;padding:16px 16px calc(16px + env(safe-area-inset-bottom));text-align:center;background:#0f0f10}
+    .mobile-cta .btn.primary{display:inline-flex;width:100%;max-width:340px;justify-content:center;margin:50px auto}
+
+    html.menu-open,body.menu-open{height:100%;overflow:hidden}
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width:980px){
       .split{grid-template-columns:1fr}
       .values-header{grid-template-columns:1fr}
       .values-grid{grid-template-columns:1fr}
@@ -105,8 +147,13 @@
       .nav ul{order:3;width:100%;justify-content:space-between}
       .nav .logo{margin-right:0}
     }
-    @media (max-width: 560px){
+    @media (max-width:900px){
+      .nav ul{display:none}
+      .nav .btn.primary{display:none !important}
+      .menu-toggle{display:inline-block}
       h1{font-size:40px}
+    }
+    @media (max-width:560px){
       .kpis{grid-template-columns:1fr 1fr}
       .team-grid{grid-template-columns:1fr}
     }
@@ -116,27 +163,51 @@
   <!-- NAVBAR -->
   <header>
     <div class="container nav">
-      <a class="logo" href="axento_solutions_landing_page_html_css.html"><img src="assets/axento_white.svg" alt="aXento.solutions" class="logo-img"></a>
+      <a class="logo" href="index.html"><img src="assets/axento_white.svg" alt="aXento.solutions" class="logo-img"></a>
       <div class="spacer"></div>
       <ul>
         <li><a class="link" href="index.html">Home</a></li>
         <li><a class="link" href="services.html">Services</a></li>
         <!-- <li><a class="link" href="case_studies.html">Case Studies</a></li> -->
         <li><a class="link" href="contact.html">Contact</a></li>
-        <li><a class="link active" href="#">About</a></li>
+        <li><a class="link active" href="about.html">About</a></li>
       </ul>
       <div class="spacer"></div>
-      <!-- <a class="link" href="platform_design.html">Login</a> -->
       <a class="btn primary" href="https://calendly.com/max-axento/30min">Request demo</a>
+
+      <!-- Mobile toggle -->
+      <button class="menu-toggle" aria-expanded="false" aria-controls="mobileMenu">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      </button>
     </div>
   </header>
+
+  <!-- MOBILE MENU (drawer + overlay) -->
+  <nav id="mobileMenu" class="mobile-menu" aria-hidden="true">
+    <div class="mobile-head">
+      <a class="logo" href="index.html">
+        <img src="assets/axento_white.svg" alt="aXento.solutions" class="logo-img">
+      </a>
+      <button class="menu-close" aria-label="Close menu">✕</button>
+    </div>
+    <ul class="mobile-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div class="mobile-cta">
+      <a href="https://calendly.com/max-axento/30min" class="btn primary">Get in touch</a>
+    </div>
+  </nav>
+  <div class="menu-overlay" hidden></div>
 
   <!-- HERO -->
   <section class="hero">
     <div class="container">
-      <div class="breadcrumbs"><a href="home.html">Home</a> • About</div>
-      <h2>About aXento.solutions</h2>
-      <p class="lead">We help small tech companies structure operations, optimize processes, and build data‑driven workflows that scale. Our team combines consulting discipline with product thinking to bring clarity and momentum to your business.</p>
+      <div class="breadcrumbs"><a href="index.html">Home</a> • About</div>
+      <h1>About aXento.solutions</h1>
+      <p class="lead">We help small tech companies structure operations, optimize processes, and build data-driven workflows that scale. Our team combines consulting discipline with product thinking to bring clarity and momentum to your business.</p>
     </div>
   </section>
 
@@ -152,8 +223,8 @@
         <h2>In numbers</h2>
         <div class="kpis">
           <div class="kpi"><div class="num">50+</div><div class="cap">processes mapped</div></div>
-          <div class="kpi"><div class="num">30%</div><div class="cap">avg. cycle‑time cut</div></div>
-          <div class="kpi"><div class="num"><span>99.9%</span></div><div class="cap">automation uptime</div></div>
+          <div class="kpi"><div class="num">30%</div><div class="cap">avg. cycle-time cut</div></div>
+          <div class="kpi"><div class="num">99.9%</div><div class="cap">automation uptime</div></div>
         </div>
       </div>
     </div>
@@ -168,7 +239,6 @@
           <p class="lead" style="font-size:16px;max-width:720px">Our values guide how we work with each other and with clients. They anchor decisions, focus our craft, and keep us accountable to outcomes—not buzzwords.</p>
         </div>
         <div class="card" style="padding:28px;display:flex;justify-content:center;align-items:center">
-          <!-- decorative polygon using pure CSS borders -->
           <svg width="160" height="140" viewBox="0 0 160 140" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <polygon points="80,6 147,50 122,126 38,126 13,50" fill="#1d1d1d" stroke="#2b2b2b"/>
             <polygon points="80,6 147,50 122,126 80,100" fill="#ff2b2f" opacity=".7"/>
@@ -251,7 +321,7 @@
       <div class="card pad">
         <h2>What we believe in</h2>
         <p>Great operations are invisible. People feel momentum, not bureaucracy. We measure success by shorter cycle times, fewer handoffs, and teams that spend time on what matters.</p>
-        <p>We document just enough, automate the routine, and keep data close to decision‑making.</p>
+        <p>We document just enough, automate the routine, and keep data close to decision-making.</p>
       </div>
     </div>
   </section>
@@ -259,11 +329,11 @@
   <!-- CTA -->
   <section class="cta">
     <div class="container">
-        <div class="inner">
-            <h2>Ready to make operations simple?</h2>
-            <p class="lead">Let’s map your core processes and find the first 2–3 high‑leverage improvements.</p>
-            <a class="btn primary" href="https://calendly.com/max-axento/30min">Book a call</a>
-        </div>
+      <div class="inner">
+        <h2>Ready to make operations simple?</h2>
+        <p class="lead">Let’s map your core processes and find the first 2–3 high-leverage improvements.</p>
+        <a class="btn primary" href="https://calendly.com/max-axento/30min">Book a call</a>
+      </div>
     </div>
   </section>
 
@@ -287,7 +357,6 @@
       <div>
         <h4>Contact me</h4>
         <form id="footerContact" action="https://api.web3forms.com/submit" method="POST">
-
           <input type="hidden" name="access_key" value="fb91dccb-6437-4c3d-882e-af08b5b8d969" />
           <input type="hidden" name="subject" value="New contact from axento.solutions (footer form)">
           <input type="hidden" name="from_name" value="aXento.solutions Website">
@@ -314,5 +383,39 @@
       <div><a href="#" style="margin-right:16px">Privacy Policies</a><a href="#">Terms of use</a></div>
     </div>
   </footer>
+
+  <!-- Minimal menu logic (same as other pages) -->
+  <script>
+    (function(){
+      const toggle = document.querySelector('.menu-toggle');
+      const drawer = document.getElementById('mobileMenu');
+      const closeBtn = drawer?.querySelector('.menu-close');
+      const overlay = document.querySelector('.menu-overlay') || (function(){const d=document.createElement('div');d.className='menu-overlay';document.body.appendChild(d);return d})();
+
+      const open = () => {
+        drawer.classList.add('open');
+        overlay.classList.add('show');
+        overlay.hidden = false;
+        document.documentElement.classList.add('menu-open');
+        document.body.classList.add('menu-open');
+        toggle.setAttribute('aria-expanded','true');
+        drawer.setAttribute('aria-hidden','false');
+      };
+      const close = () => {
+        drawer.classList.remove('open');
+        overlay.classList.remove('show');
+        overlay.hidden = true;
+        document.documentElement.classList.remove('menu-open');
+        document.body.classList.remove('menu-open');
+        toggle.setAttribute('aria-expanded','false');
+        drawer.setAttribute('aria-hidden','true');
+      };
+
+      toggle?.addEventListener('click', open);
+      closeBtn?.addEventListener('click', close);
+      overlay?.addEventListener('click', close);
+      window.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && drawer.classList.contains('open')) close(); });
+    })();
+  </script>
 </body>
 </html>
