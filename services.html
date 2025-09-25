@@ -213,6 +213,33 @@
       }
       .subfooter .links,.subfooter .sitemap{justify-content:center;justify-self:center;gap:14px}
     }
+
+    /* --- Hard-fix NAV only on phones (services) --- */
+    @media (max-width:900px){
+      /* 1) Стабільна сітка: logo | free space | burger */
+      .nav{
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        gap: 12px;             /* компактніше, ніж 28px — не провокує перенос */
+        flex-wrap: unset;      /* на випадок, якщо десь буде перевизначення */
+        min-height: 56px;      /* стабільна висота бару */
+      }
+
+      /* 2) На мобільному ul і header-CTA заховані — спейсери не потрібні */
+      .nav ul,
+      .nav .btn.primary{ display: none !important; }
+      .nav .spacer{ display: none; }
+
+      /* 3) Бургер строго праворуч */
+      .menu-toggle{ display: inline-block; justify-self: end; margin-left: 0; }
+    }
+
+    /* Дрібний полірувальний штрих, щоб логотип не «стрибав» по висоті */
+    .logo-img{ height:22px; display:block }
+    @media (min-width:981px){ .logo-img{ height:24px } }
+    @media (min-width:1440px){ .logo-img{ height:26px } }
+
   </style>
 
 
