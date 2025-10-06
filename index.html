@@ -224,6 +224,28 @@
   margin: 50px auto;
 }
 
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  text-align: center;
+}
+
+.service {
+  padding: 1rem;
+}
+
+.service-icon {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.service-icon:hover {
+  transform: scale(1.1);
+}
+
 /* hard-lock page scroll when open (keep these) */
 html.menu-open, body.menu-open{ height:100%; overflow:hidden; }
 
