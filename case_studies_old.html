@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Case Studies — aXento.solutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#0f0f10;--bg-2:#171717;--text:#f2f2f2;--muted:#a9a9a9;--accent:#e52222;--card:#121212;--card-2:#1c1c1c;--line:#262626;--radius:18px;--shadow:0 10px 30px rgba(0,0,0,.35);--container:1180px}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{max-width:var(--container);margin:0 auto;padding:0 24px}
+
+    /* NAV */
+    header{position:sticky;top:0;z-index:40;background:rgba(15,15,16,.75);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid var(--line)}
+    .nav{display:flex;align-items:center;gap:28px;padding:14px 0}
+    .logo{display:flex;align-items:center;margin-right:32px}
+    .logo-img{height:24px}
+    .nav ul{list-style:none;margin:0;padding:0;display:flex;gap:28px}
+    .nav a.link{color:#d8d8d8;font-weight:600}
+    .nav a.link:hover{color:#fff}
+    .nav a.active{color:#fff;position:relative}
+    .nav a.active:after{content:"";position:absolute;left:0;right:0;bottom:-12px;height:2px;background:var(--accent);border-radius:2px}
+    .nav .spacer{flex:1}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 16px;border-radius:999px;font-weight:700;border:1px solid transparent;transition:all .18s ease;line-height:1}
+    .btn.primary{background:var(--accent);color:#fff;box-shadow:0 6px 16px rgba(229,34,34,.35)}
+    .btn.primary:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(229,34,34,.45)}
+    .btn.ghost{border:1px solid var(--line);color:#fff;background:transparent}
+
+    /* HERO */
+    .hero{padding:64px 0;background:linear-gradient(180deg,rgba(255,255,255,.02),transparent 40%)}
+    .eyebrow{font-size:14px;color:var(--muted);letter-spacing:.28px;margin-bottom:8px}
+    h1{font-size:52px;line-height:1.05;margin:8px 0 12px;font-weight:800}
+    .lead{max-width:820px;color:#d5d5d5;font-size:18px}
+    .breadcrumbs{margin:6px 0 10px;color:#b9b9b9;font-size:14px}
+    .breadcrumbs a{color:#cfcfcf}
+
+    section{padding:24px 0}
+    h2{font-size:34px;margin:0 0 18px}
+
+    /* FILTERS */
+    .filters{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 0}
+    .chip{padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:var(--card-2);color:#dcdcdc;font-weight:600;cursor:pointer;user-select:none}
+    .chip.active{border-color:var(--accent);color:#fff}
+
+    /* GRID */
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;display:flex;flex-direction:column}
+    .thumb{height:140px;border:1px solid var(--line);border-radius:12px;background:radial-gradient(420px 160px at 30% 0%, rgba(229,34,34,.18), transparent 55%),linear-gradient(180deg,#1a1a1a,#121212)}
+    .meta{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 8px}
+    .tag{padding:4px 8px;border:1px solid var(--line);border-radius:999px;background:#141414;color:#cfcfcf;font-size:12px}
+    .card h3{margin:8px 0 6px}
+    .sum{color:#cfcfcf;margin:0 0 10px}
+    .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+    .metric{background:var(--card-2);border:1px solid var(--line);border-radius:10px;padding:10px}
+    .metric .num{font-weight:800}
+    .grow{margin-top:auto}
+
+    /* DETAILS */
+    details{border:1px solid var(--line);border-radius:14px;background:var(--card-2);padding:14px}
+    summary{cursor:pointer;font-weight:800}
+    details ul{margin:8px 0 0;padding-left:18px;color:#d1d1d1}
+
+    /* CTA */
+    .cta{padding:56px 0;border-top:1px solid var(--line)}
+    .cta .inner{max-width:860px;margin:0 auto;text-align:center}
+    .cta h2{margin:0 0 10px}
+    .cta .lead{max-width:740px;margin:0 auto 18px;color:#d0d0d0;font-size:16px}
+
+    /* FOOTER */
+    footer{border-top:1px solid var(--line);padding:28px 0 34px}
+    .footer-grid{display:grid;grid-template-columns:1.2fr .9fr 1fr;gap:28px}
+    .muted{color:var(--muted)}
+    .socials{display:flex;gap:12px;margin-top:8px}
+    .socials a{display:flex;align-items:center;justify-content:center;height:36px;width:36px;border-radius:10px;border:1px solid var(--line)}
+    .field{width:100%;padding:10px 12px;border-radius:10px;background:#151515;border:1px solid var(--line);color:#fff}
+    .foot-cta{display:flex;gap:8px;align-items:end}
+    .subfooter{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:14px;margin-top:18px;color:#bdbdbd;font-size:12px}
+
+    @media (max-width:1100px){.grid{grid-template-columns:1fr 1fr}.footer-grid{grid-template-columns:1fr}.nav{flex-wrap:wrap;row-gap:10px}.nav ul{order:3;width:100%;justify-content:space-between}.logo{margin-right:0}}
+    @media (max-width:680px){h1{font-size:40px}.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header>
+    <div class="container nav">
+      <a class="logo" href="index.html"><img src="assets/axento_white.svg" alt="aXento.solutions" class="logo-img"></a>
+      <div class="spacer"></div>
+      <ul>
+        <li><a class="link" href="home.html">Home</a></li>
+        <li><a class="link" href="services.html">Services</a></li>
+        <li><a class="link active" href="#">Case Studies</a></li>
+        <li><a class="link" href="contact.html">Contact</a></li>
+        <li><a class="link" href="about.html">About</a></li>
+      </ul>
+      <div class="spacer"></div>
+      <!-- <a class="link" href="platform_design.html">Login</a> -->
+      <a class="btn primary" href="https://calendly.com/max-axento/30min">Request demo</a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="breadcrumbs"><a href="home.html">Home</a> • Case Studies</div>
+      <h1>Case Studies</h1>
+      <p class="lead">Not-real examples designed as placeholders.</p>
+      <div class="filters" id="filters">
+        <span class="chip active" data-type="all">All</span>
+        <span class="chip" data-type="saas">SaaS</span>
+        <span class="chip" data-type="ecom">E‑commerce</span>
+        <span class="chip" data-type="logistics">Logistics</span>
+        <span class="chip" data-type="health">Healthcare</span>
+        <span class="chip" data-type="fintech">Fintech</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- GRID OF CASES -->
+  <section>
+    <div class="container">
+      <div class="grid" id="grid">
+        <!-- Card 1 -->
+        <article class="card" data-type="fintech">
+          <div class="thumb" aria-hidden="true"></div>
+          <div class="meta"><span class="tag">Fintech</span><span class="tag">Team 24</span><span class="tag">Audit + OKRs</span></div>
+          <h3>AuroraPay — From chaos to cadence</h3>
+          <p class="sum">Payments startup lacked clear ownership and weekly rhythm. We installed an operating cadence and KPI tree.</p>
+          <div class="metrics">
+            <div class="metric"><div class="num">-32%</div><div class="cap">lead time</div></div>
+            <div class="metric"><div class="num">+18%</div><div class="cap">release predictability</div></div>
+            <div class="metric"><div class="num">2 wks</div><div class="cap">audit</div></div>
+          </div>
+          <details class="grow" style="margin-top:12px"><summary>Read case</summary>
+            <ul>
+              <li><strong>Context:</strong> 24 people, rapid growth, unclear roles.</li>
+              <li><strong>Challenges:</strong> conflicting priorities, rework, no metrics.</li>
+              <li><strong>Approach:</strong> interviews → process map → OKR/RACI setup → delivery review.</li>
+              <li><strong>Stack:</strong> Notion, Slack, Google, lightweight dashboard.</li>
+              <li><strong>Outcome:</strong> shorter lead time, predictable releases, clearer ownership.</li>
+            </ul>
+          </details>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="card" data-type="saas">
+          <div class="thumb" aria-hidden="true"></div>
+          <div class="meta"><span class="tag">SaaS</span><span class="tag">Automation</span><span class="tag">Onboarding</span></div>
+          <h3>FulcrumCRM — Automating onboarding</h3>
+          <p class="sum">Manual onboarding consumed PM time. We built an automated checklist with approvals and handoff guards.</p>
+          <div class="metrics">
+            <div class="metric"><div class="num">-12 h</div><div class="cap">per client</div></div>
+            <div class="metric"><div class="num">99.9%</div><div class="cap">run reliability</div></div>
+            <div class="metric"><div class="num">3 wks</div><div class="cap">build</div></div>
+          </div>
+          <details style="margin-top:12px"><summary>Read case</summary>
+            <ul>
+              <li><strong>Context:</strong> B2B CRM with 80+ monthly onboardings.</li>
+              <li><strong>Approach:</strong> mapped steps, designed forms and auto‑notifications, added SLA alerts.</li>
+              <li><strong>Stack:</strong> Google Apps Script + Notion API + Slack.</li>
+              <li><strong>Outcome:</strong> consistent client experience, reclaimed PM bandwidth.</li>
+            </ul>
+          </details>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="card" data-type="logistics">
+          <div class="thumb" aria-hidden="true"></div>
+          <div class="meta"><span class="tag">Logistics</span><span class="tag">Process</span><span class="tag">Playbooks</span></div>
+          <h3>Scout Logistics — Dispatcher playbooks</h3>
+          <p class="sum">Different dispatchers did things differently. We standardized SOPs and introduced checklists.</p>
+          <div class="metrics">
+            <div class="metric"><div class="num">-27%</div><div class="cap">handoff errors</div></div>
+            <div class="metric"><div class="num">+2.1x</div><div class="cap">new‑hire ramp</div></div>
+            <div class="metric"><div class="num">4 wks</div><div class="cap">program</div></div>
+          </div>
+          <details style="margin-top:12px"><summary>Read case</summary>
+            <ul>
+              <li><strong>Approach:</strong> shadowing → bottleneck analysis → SOP & checklist kit → training.</li>
+              <li><strong>Outcome:</strong> fewer errors, faster ramp, better NPS.</li>
+            </ul>
+          </details>
+        </article>
+
+        <!-- Card 4 -->
+        <article class="card" data-type="health">
+          <div class="thumb" aria-hidden="true"></div>
+          <div class="meta"><span class="tag">Healthcare</span><span class="tag">Analytics</span></div>
+          <h3>NovaHealth — Metrics that matter</h3>
+          <p class="sum">Clinic network tracked too many numbers. We built a simple KPI tree with weekly reviews.</p>
+          <div class="metrics">
+            <div class="metric"><div class="num">-40%</div><div class="cap">reporting time</div></div>
+            <div class="metric"><div class="num">6</div><div class="cap">core KPIs</div></div>
+            <div class="metric"><div class="num">8 wks</div><div class="cap">rollout</div></div>
+          </div>
+          <details style="margin-top:12px"><summary>Read case</summary>
+            <ul>
+              <li><strong>Approach:</strong> KPI tree, source‑of‑truth, dashboard and cadence.</li>
+              <li><strong>Outcome:</strong> focused reviews and faster decisions.</li>
+            </ul>
+          </details>
+        </article>
+
+        <!-- Card 5 -->
+        <article class="card" data-type="ecom">
+          <div class="thumb" aria-hidden="true"></div>
+          <div class="meta"><span class="tag">E‑commerce</span><span class="tag">Operating model</span></div>
+          <h3>VectraRetail — Scaling beyond the founder</h3>
+          <p class="sum">All decisions ran through the founder. We clarified roles, set review rituals, and delegated effectively.</p>
+          <div class="metrics">
+            <div class="metric"><div class="num">-50%</div><div class="cap">founder load</div></div>
+            <div class="metric"><div class="num">+22%</div><div class="cap">OTIF orders</div></div>
+            <div class="metric"><div class="num">6 wks</div><div class="cap">engagement</div></div>
+          </div>
+          <details style="margin-top:12px"><summary>Read case</summary>
+            <ul>
+              <li><strong>Approach:</strong> RACI for functions, weekly ops review, issue triage flow.</li>
+              <li><strong>Outcome:</strong> faster decisions and fewer bottlenecks.</li>
+            </ul>
+          </details>
+        </article>
+
+        <!-- Card 6 -->
+        <article class="card" data-type="saas">
+          <div class="thumb" aria-hidden="true"></div>
+          <div class="meta"><span class="tag">SaaS</span><span class="tag">QA</span><span class="tag">Delivery</span></div>
+          <h3>AtlasLearn — Quality without slowing down</h3>
+          <p class="sum">Education platform had regressions every release. We added a pre‑release gate and issue taxonomy.</p>
+          <div class="metrics">
+            <div class="metric"><div class="num">-61%</div><div class="cap">post‑release bugs</div></div>
+            <div class="metric"><div class="num">+14%</div><div class="cap">velocity</div></div>
+            <div class="metric"><div class="num">5 wks</div><div class="cap">program</div></div>
+          </div>
+          <details style="margin-top:12px"><summary>Read case</summary>
+            <ul>
+              <li><strong>Approach:</strong> risk‑based test plan, checklists, release review, metrics.</li>
+              <li><strong>Outcome:</strong> fewer incidents with higher throughput.</li>
+            </ul>
+          </details>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="container">
+      <div class="inner">
+        <h2>Want a case like these?</h2>
+        <p class="lead">Let’s map your core processes and find the first 2–3 high‑leverage improvements.</p>
+        <a class="btn primary" href="https://calendly.com/max-axento/30min">Book a call</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container footer-grid">
+      <div class="addr">
+        <a class="logo" href="index.html"><img src="assets/axento_white.svg" alt="aXento.solutions" class="logo-img"></a>
+        <h4>aXento.solutions</h4>
+        <p class="muted">41, Pid Holoskom 17B<br>79067 Lviv, Ukraine</p>
+        <a class="muted" href="mailto:contact@axento.solutions">contact@axento.solutions</a>
+      </div>
+      <div>
+        <h4>Follow us:</h4>
+        <p class="muted">We share operations tips and case studies.</p>
+        <div class="socials">
+          <a href="#" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4Z" stroke="#fff"/><circle cx="12" cy="12" r="3.5" stroke="#fff"/><circle cx="17.5" cy="6.5" r="1" fill="#fff"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 10h3l-1 4h-2v7h-4v-7H7v-4h2V8a4 4 0 0 1 4-4h3v4h-3a1 1 0 0 0-1 1v1Z" fill="#fff"/></svg></a>
+          <a href="https://www.linkedin.com/company/axento-solutions" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.94 8.5H3.75V20h3.19V8.5ZM5.34 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM20.25 20v-6.5c0-3.46-1.85-5.06-4.33-5.06-1.99 0-2.89 1.09-3.39 1.86V8.5H9.5V20h3.03v-6.25c0-1.65.94-2.7 2.38-2.7 1.39 0 2.34.98 2.34 2.9V20h2.99Z" fill="#fff"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <h4>Contact me</h4>
+        <form action="#" method="post" onsubmit="event.preventDefault(); alert('Thanks! We\'ll get back to you.');">
+          <label style="display:block;font-size:12px;color:#a9a9a9">Name
+            <input class="field" type="text" name="name" placeholder="Name" required>
+          </label>
+          <label style="display:block;margin-top:8px;font-size:12px;color:#a9a9a9">Email
+            <input class="field" type="email" name="email" placeholder="Email" required>
+          </label>
+          <div class="foot-cta" style="margin-top:10px">
+            <button class="btn primary" type="submit">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="container subfooter">
+      <div>© 2025 aXento.solutions. All rights reserved.</div>
+      <div><a href="#" style="margin-right:16px">Privacy Policies</a><a href="#">Terms of use</a></div>
+    </div>
+  </footer>
+</body>
+</html>
